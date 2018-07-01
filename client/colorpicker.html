@@ -1,0 +1,1192 @@
+
+<head>
+	<meta charset="UTF-8">
+	<title>ColorPicker</title>
+</head>
+	
+<body>
+	
+	{{>ColorPicker}}
+		
+</body>
+
+
+<template name="ColorPicker">
+
+	<ul class="btnLockMenu" id="btnLockLibraries">
+	    <li>
+		    	<a class="cl1-Option" id="COLOR1"><i class="fa fa-lock"></i>cl1</a>
+		    	<div id="cl1" class="CP__container __active">
+
+					<button class="exact__match__mode__btn" name="exact__match__mode__btn">Exact Match</button>
+  					<button class="range__match__mode__btn" name="range__match__mode__btn">Range</button>
+  					<br><br>
+
+  					<div class="container-picker">
+  						<div id="color-picker">
+  							<canvas id="color-block" name="color-block" height="120" width="120"></canvas>
+  							<button class="pickersito" name="pickersito"></button>
+  							<canvas id="color-strip" name="color-strip" height="120" width="30"></canvas>
+  							<button class="estrpsito" name="estripsito"></button>
+  						</div>
+
+  						<div class="vertical__buttons">
+  							<div class="container_inline">
+  								<label for="HUE">HUE</label>
+  								<input type="number" value="0" placeholder="HUE" class=" toggle__picker hsla__mode" name="hue_mode"/>
+  							</div>
+  							<div class="container_inline">
+  								<label for="SAT">SAT</label>
+  								<input type="number" value="100" placeholder="SAT" class="toggle__picker hsla__mode_2" name="sat_mode">
+  							</div>
+  							<div class="container_inline">
+  								<label for="LIGHT">LIGHT</label>
+  								<input type="number" value="50" placeholder="LIGHT" class="toggle__picker hsla__mode_3" name="ligth_mode">
+  							</div>
+  						</div>
+  					</div>
+  					<div class="horizontal__buttons">
+  							<input type="text" name="hex_code" class="hex_input">
+  							<label for="RED">R</label>
+  							<input type="number" id="RED" value="255" placeholder="RED" class="toggle__picker rgba__mode" name="red_mode">
+  							<label for="GREEN">G</label>
+  							<input type="number" id="GREEN" value="0" placeholder="GREEN" class="toggle__picker rgba__mode_2" name="green_mode">
+  							<label for="BLUE">B</label>
+  							<input type="number" id="BLUE" value="0" placeholder="BLUE" class="toggle__picker rgba__mode_3" name="blue_mode">
+  							<label for="OPACITY">A</label>
+  							<input type="number" id="OPACITY" value="1" placeholder="OPACITY" class="toggle__picker rgba__mode_4" name="opacity_mode">
+  					</div>
+
+  					<div class="__sliders __first__slider __active">
+  						<br>
+  						<button class="rgba__mode__btn" name="rgba__mode__btn">RGBA</button>
+  						<button class="hsla__mode__btn" name="hsla__mode__btn">HSLA</button>
+
+  						<div class="sliders__colorpicker __one">
+  							<div class="slider-inline">
+  								<span>R</span>
+  								<input type="number" name="r" value="255">
+  								<input type="range" min="0" max="255" step="1" class="slider__picker R" name="r_input" value="255">
+  								<button class="red" name="red__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>G</span>
+  								<input type="number" name="g" value="0">
+  								<input type="range" min="0" max="255" step="1" class="slider__picker G" name="g_input" value="0">
+  								<button class="green" name="green__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>B</span>
+  								<input type="number" name="b" value="0">
+  								<input type="range" min="0" max="255" step="1" class="slider__picker B" name="b_input" value="0">
+  								<button class="blue" name="blue__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline">
+  								<span>A</span>
+  								<input type="number" name="a" value="1">
+  								<input type="range" min="0" max="1" step="0.01" value="1" class="slider__picker A" name="a_input">
+  								<button class="alpha" name="alpha__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  					    </div>
+
+  		                <!--HSLA SLIDERS-->
+  		                <div class="sliders__colorpicker __two __active">
+  							<div class="slider-inline">
+  								<span>H</span>
+  								<input type="number" name="h" value="0">
+  								<input type="range" min="0" max="360" step="1" value="0" class="slider__picker H" name="h_input">
+  								<button class="hue" name="hue__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>S</span>
+  								<input type="number" name="s" value="100">
+  								<input type="range" min="0" max="100" step="1" value="100" class="slider__picker S" name="s_input">
+  								<button class="sat" name="sat__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>L</span>
+  								<input type="number" name="l" value="50">
+  								<input type="range" min="0" max="100" step="1" value="50" class="slider__picker L" name="l_input">
+  								<button class="ligth" name="ligth__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline">
+  								<span>A</span>
+  								<input type="number" name="a_hsl" value="1">
+  								<input type="range" min="0" max="1" step="0.01" value="1" class="slider__picker A" name="a_hsl_input">
+  								<button class="alpha_hsla" name="alpha_hsla__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+  						</div>
+  					</div>
+
+  					<div class="__sliders __second__slider">
+
+  						<br>
+  						<button class="rgba__range__mode__btn" name="rgba__range__mode__btn">RGBA</button>
+  						<button class="hsla__range__mode__btn" name="hsla__range__mode__btn">HSLA</button>
+  						<br>
+  						<!-- HSLA Range Slider -->
+
+  						<div class="sliders__colorpicker __four __active">
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>H</span>
+  								<input type="number" name="h_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="h_range_input_2" style="width: 30px;" value="360">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="360" value="0" class="range__slider__double H_range" name="h_range_1">
+  		  							<input type="range" min="0" max="360" value="360" class="range__slider__double bottom_thumb H_range" name="h_range_2">
+  								</div>
+
+  								<button class="hue"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>S</span>
+  								<input type="number" name="s_range_input_1" style="width: 30px;" value="100">
+  								<input type="number" name="s_range_input_2" style="width: 30px;" value="0">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="100" value="100" class="range__slider__double" name="s_range_1">
+  		  							<input type="range" min="0" max="100" value="0" class="range__slider__double bottom_thumb" name="s_range_2">
+  								</div>
+  								<button class="sat"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>L</span>
+  								<input type="number" name="l_range_input_1" style="width: 30px;" value="50">
+  								<input type="number" name="l_range_input_2" style="width: 30px;" value="0">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="100" value="50" class="range__slider__double" name="l_range_1">
+  		  							<input type="range" min="0" max="100" value="0" class="range__slider__double bottom_thumb" name="l_range_2">
+  								</div>
+  								<button class="ligth"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>A</span>
+  								<input type="number" name="ahsla_range_input_1" style="width: 30px;" value="1">
+  								<input type="number" name="ahsla_range_input_2" style="width: 30px;" value="1">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="1" step="0.01" value="1" class="range__slider__double A_range" name="ahsla_range_1">
+  		  							<input type="range" min="0" max="1" step="0.01" value="1" class="range__slider__double bottom_thumb A_range" name="ahsla_range_2">
+  								</div>
+  								<button class="alpha_hsla"><i class="fa fa-lock"></i></button>
+  							</div>
+  						</div>
+
+  						<!-- RGBA Range Slider -->
+
+  						<div class="sliders__colorpicker __tree">
+  							<div class="slider-inline">
+  								<span>R</span>
+  								<input type="number" name="r_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="r_range_input_2" style="width: 30px;" min="0" max="255" value="255">
+  								<div class="range__slider">
+  		  							<input type="range" name="r_range_1" min="0" max="255" value="0" class="range__slider__double R_range">
+  		  							<input type="range" name="r_range_2" min="0" max="255" value="255" class="range__slider__double bottom_thumb R_range">
+  								</div>
+  								<button class="red"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>G</span>
+  								<input type="number"  name="g_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="g_range_input_2" style="width: 30px;" value="255">
+  								<div class="range__slider">
+  		  							<input type="range" name="g_range_1" min="0" max="255" value="0" class="range__slider__double G_range">
+  		  							<input type="range" name="g_range_2" min="0" max="255" value="255" class="range__slider__double bottom_thumb G_range">
+  								</div>
+  								<button class="green"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>B</span>
+  								<input type="number" name="b_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="b_range_input_2" style="width: 30px;" value="255">
+  								<div class="range__slider">
+  		  							<input type="range" name="b_range_1" min="0" max="255" value="0" class="range__slider__double B_range">
+  		  							<input type="range" name="b_range_2" min="0" max="255" value="255" class="range__slider__double bottom_thumb B_range">
+  								</div>
+  								<button class="blue"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline">
+  								<span>A</span>
+  								<input type="number" name="a_range_input_1" style="width: 30px;" value="1">
+  								<input type="number" name="a_range_input_2" style="width: 30px;" value="1">
+  								<div class="range__slider">
+  		  							<input type="range" name="a_range_1" min="0" max="1" step="0.01" value="1" class="range__slider__double A_range">
+  		  							<input type="range" name="a_range_2" min="0" max="1" step="0.01" value="1" class="range__slider__double bottom_thumb A_range">
+  								</div>
+  								<button class="alpha"><i class="fa fa-lock"></i></button>
+  							</div>
+  						</div>
+
+
+
+  					</div>
+
+  					<label for="color-input" class="background-label" name="color-label" id="color-label" style="background-color: red"></label>
+  					<input type="checkbox" id="color-input" checked>
+
+  					<div class="HA__slider">
+  						<input type="range" min="0" max="360" value="0" name="HA__SLIDER">
+  					</div>
+		      	</div>
+	    </li>
+	    <li>
+			<a class="cl2-Option" href="#" id="COLOR2"><i class="fa fa-lock"></i>cl2</a>
+			<div id="cl2" class="CP__container">
+
+
+					<button class="btn btn-default exact__match__mode__btn" name="exact__match__mode__btn">Exact Match</button>
+  					<button class="btn btn-default range__match__mode__btn" name="range__match__mode__btn">Range</button>
+  					<br><br>
+
+  					<div class="container-picker">
+  						<div id="color-picker">
+  							<canvas id="color-block" name="color-block" height="120" width="120"></canvas>
+  							<button class="pickersito" name="pickersito"></button>
+  							<canvas id="color-strip" name="color-strip" height="120" width="30"></canvas>
+  							<button class="estrpsito" name="estripsito"></button>
+  						</div>
+
+  						<div class="vertical__buttons">
+  							<div class="container_inline">
+  								<label for="HUE">HUE</label>
+  								<input type="number" value="0" placeholder="HUE" class=" toggle__picker hsla__mode" name="hue_mode"/>
+  							</div>
+  							<div class="container_inline">
+  								<label for="SAT">SAT</label>
+  								<input type="number" value="100" placeholder="SAT" class="toggle__picker hsla__mode_2" name="sat_mode">
+  							</div>
+  							<div class="container_inline">
+  								<label for="LIGHT">LIGHT</label>
+  								<input type="number" value="50" placeholder="LIGHT" class="toggle__picker hsla__mode_3" name="ligth_mode">
+  							</div>
+  						</div>
+  					</div>
+  					<div class="horizontal__buttons">
+  							<input type="text" name="hex_code" class="hex_input">
+  							<label for="RED">R</label>
+  							<input type="number" id="RED" value="255" placeholder="RED" class="toggle__picker rgba__mode" name="red_mode">
+  							<label for="GREEN">G</label>
+  							<input type="number" id="GREEN" value="0" placeholder="GREEN" class="toggle__picker rgba__mode_2" name="green_mode">
+  							<label for="BLUE">B</label>
+  							<input type="number" id="BLUE" value="0" placeholder="BLUE" class="toggle__picker rgba__mode_3" name="blue_mode">
+  							<label for="OPACITY">A</label>
+  							<input type="number" id="OPACITY" value="1" placeholder="OPACITY" class="toggle__picker rgba__mode_4" name="opacity_mode">
+  					</div>
+
+  					<div class="__sliders __first__slider __active">
+  						<br>
+  						<button class="btn btn-default rgba__mode__btn" name="rgba__mode__btn">RGBA</button>
+  						<button class="btn btn-default hsla__mode__btn" name="hsla__mode__btn">HSLA</button>
+
+  						<div class="sliders__colorpicker __one">
+  							<div class="slider-inline">
+  								<span>R</span>
+  								<input type="number" name="r" value="255">
+  								<input type="range" min="0" max="255" step="1" class="slider__picker R" name="r_input" value="255">
+  								<button class="red" name="red__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>G</span>
+  								<input type="number" name="g" value="0">
+  								<input type="range" min="0" max="255" step="1" class="slider__picker G" name="g_input" value="0">
+  								<button class="green" name="green__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>B</span>
+  								<input type="number" name="b" value="0">
+  								<input type="range" min="0" max="255" step="1" class="slider__picker B" name="b_input" value="0">
+  								<button class="blue" name="blue__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline">
+  								<span>A</span>
+  								<input type="number" name="a" value="1">
+  								<input type="range" min="0" max="1" step="0.01" value="1" class="slider__picker A" name="a_input">
+  								<button class="alpha" name="alpha__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  					    </div>
+
+  		                <!--HSLA SLIDERS-->
+  		                <div class="sliders__colorpicker __two __active">
+  							<div class="slider-inline">
+  								<span>H</span>
+  								<input type="number" name="h" value="0">
+  								<input type="range" min="0" max="360" step="1" value="0" class="slider__picker H" name="h_input">
+  								<button class="hue" name="hue__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>S</span>
+  								<input type="number" name="s" value="100">
+  								<input type="range" min="0" max="100" step="1" value="100" class="slider__picker S" name="s_input">
+  								<button class="sat" name="sat__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>L</span>
+  								<input type="number" name="l" value="50">
+  								<input type="range" min="0" max="100" step="1" value="50" class="slider__picker L" name="l_input">
+  								<button class="ligth" name="ligth__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline">
+  								<span>A</span>
+  								<input type="number" name="a_hsl" value="1">
+  								<input type="range" min="0" max="1" step="0.01" value="1" class="slider__picker A" name="a_hsl_input">
+  								<button class="alpha_hsla" name="alpha_hsla__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+  						</div>
+  					</div>
+
+  					<div class="__sliders __second__slider">
+
+  						<br>
+  						<button class="btn btn-default rgba__range__mode__btn" name="rgba__range__mode__btn">RGBA</button>
+  						<button class="btn btn-default hsla__range__mode__btn" name="hsla__range__mode__btn">HSLA</button>
+  						<br>
+  						<!-- HSLA Range Slider -->
+
+  						<div class="sliders__colorpicker __four __active">
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>H</span>
+  								<input type="number" name="h_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="h_range_input_2" style="width: 30px;" value="360">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="360" value="0" class="range__slider__double H_range" name="h_range_1">
+  		  							<input type="range" min="0" max="360" value="360" class="range__slider__double bottom_thumb H_range" name="h_range_2">
+  								</div>
+
+  								<button class="hue"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>S</span>
+  								<input type="number" name="s_range_input_1" style="width: 30px;" value="100">
+  								<input type="number" name="s_range_input_2" style="width: 30px;" value="0">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="100" value="100" class="range__slider__double" name="s_range_1">
+  		  							<input type="range" min="0" max="100" value="0" class="range__slider__double bottom_thumb" name="s_range_2">
+  								</div>
+  								<button class="sat"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>L</span>
+  								<input type="number" name="l_range_input_1" style="width: 30px;" value="50">
+  								<input type="number" name="l_range_input_2" style="width: 30px;" value="0">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="100" value="50" class="range__slider__double" name="l_range_1">
+  		  							<input type="range" min="0" max="100" value="0" class="range__slider__double bottom_thumb" name="l_range_2">
+  								</div>
+  								<button class="ligth"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>A</span>
+  								<input type="number" name="ahsla_range_input_1" style="width: 30px;" value="1">
+  								<input type="number" name="ahsla_range_input_2" style="width: 30px;" value="1">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="1" step="0.01" value="1" class="range__slider__double A_range" name="ahsla_range_1">
+  		  							<input type="range" min="0" max="1" step="0.01" value="1" class="range__slider__double bottom_thumb A_range" name="ahsla_range_2">
+  								</div>
+  								<button class="alpha_hsla"><i class="fa fa-lock"></i></button>
+  							</div>
+  						</div>
+
+  						<!-- RGBA Range Slider -->
+
+  						<div class="sliders__colorpicker __tree">
+  							<div class="slider-inline">
+  								<span>R</span>
+  								<input type="number" name="r_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="r_range_input_2" style="width: 30px;" min="0" max="255" value="255">
+  								<div class="range__slider">
+  		  							<input type="range" name="r_range_1" min="0" max="255" value="0" class="range__slider__double R_range">
+  		  							<input type="range" name="r_range_2" min="0" max="255" value="255" class="range__slider__double bottom_thumb R_range">
+  								</div>
+  								<button class="red"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>G</span>
+  								<input type="number"  name="g_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="g_range_input_2" style="width: 30px;" value="255">
+  								<div class="range__slider">
+  		  							<input type="range" name="g_range_1" min="0" max="255" value="0" class="range__slider__double G_range">
+  		  							<input type="range" name="g_range_2" min="0" max="255" value="255" class="range__slider__double bottom_thumb G_range">
+  								</div>
+  								<button class="green"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>B</span>
+  								<input type="number" name="b_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="b_range_input_2" style="width: 30px;" value="255">
+  								<div class="range__slider">
+  		  							<input type="range" name="b_range_1" min="0" max="255" value="0" class="range__slider__double B_range">
+  		  							<input type="range" name="b_range_2" min="0" max="255" value="255" class="range__slider__double bottom_thumb B_range">
+  								</div>
+  								<button class="blue"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline">
+  								<span>A</span>
+  								<input type="number" name="a_range_input_1" style="width: 30px;" value="1">
+  								<input type="number" name="a_range_input_2" style="width: 30px;" value="1">
+  								<div class="range__slider">
+  		  							<input type="range" name="a_range_1" min="0" max="1" step="0.01" value="1" class="range__slider__double A_range">
+  		  							<input type="range" name="a_range_2" min="0" max="1" step="0.01" value="1" class="range__slider__double bottom_thumb A_range">
+  								</div>
+  								<button class="alpha"><i class="fa fa-lock"></i></button>
+  							</div>
+  						</div>
+
+
+
+  					</div>
+
+  					<label for="color-input" class="background-label" name="color-label" id="color-label" style="background-color: red"></label>
+  					<input type="checkbox" id="color-input" checked>
+
+  					<div class="HA__slider">
+  						<input type="range" min="0" max="360" value="0" name="HA__SLIDER">
+  					</div>
+
+
+		    </div>
+	    </li>
+	    <li>
+		    	<a class="cl3-Option" id="COLOR3" href="#"><i class="fa fa-lock"></i>cl3</a>
+		    	<div id="cl3" class="CP__container">
+
+					<button class="btn btn-default exact__match__mode__btn" name="exact__match__mode__btn">Exact Match</button>
+  					<button class="btn btn-default range__match__mode__btn" name="range__match__mode__btn">Range</button>
+  					<br><br>
+
+  					<div class="container-picker">
+  						<div id="color-picker">
+  							<canvas id="color-block" name="color-block" height="120" width="120"></canvas>
+  							<button class="pickersito" name="pickersito"></button>
+  							<canvas id="color-strip" name="color-strip" height="120" width="30"></canvas>
+  							<button class="estrpsito" name="estripsito"></button>
+  						</div>
+
+  						<div class="vertical__buttons">
+  							<div class="container_inline">
+  								<label for="HUE">HUE</label>
+  								<input type="number" value="0" placeholder="HUE" class=" toggle__picker hsla__mode" name="hue_mode"/>
+  							</div>
+  							<div class="container_inline">
+  								<label for="SAT">SAT</label>
+  								<input type="number" value="100" placeholder="SAT" class="toggle__picker hsla__mode_2" name="sat_mode">
+  							</div>
+  							<div class="container_inline">
+  								<label for="LIGHT">LIGHT</label>
+  								<input type="number" value="50" placeholder="LIGHT" class="toggle__picker hsla__mode_3" name="ligth_mode">
+  							</div>
+  						</div>
+  					</div>
+  					<div class="horizontal__buttons">
+  							<input type="text" name="hex_code" class="hex_input">
+  							<label for="RED">R</label>
+  							<input type="number" id="RED" value="255" placeholder="RED" class="toggle__picker rgba__mode" name="red_mode">
+  							<label for="GREEN">G</label>
+  							<input type="number" id="GREEN" value="0" placeholder="GREEN" class="toggle__picker rgba__mode_2" name="green_mode">
+  							<label for="BLUE">B</label>
+  							<input type="number" id="BLUE" value="0" placeholder="BLUE" class="toggle__picker rgba__mode_3" name="blue_mode">
+  							<label for="OPACITY">A</label>
+  							<input type="number" id="OPACITY" value="1" placeholder="OPACITY" class="toggle__picker rgba__mode_4" name="opacity_mode">
+  					</div>
+
+  					<div class="__sliders __first__slider __active">
+  						<br>
+  						<button class="btn btn-default rgba__mode__btn" name="rgba__mode__btn">RGBA</button>
+  						<button class="btn btn-default hsla__mode__btn" name="hsla__mode__btn">HSLA</button>
+
+  						<div class="sliders__colorpicker __one">
+  							<div class="slider-inline">
+  								<span>R</span>
+  								<input type="number" name="r" value="255">
+  								<input type="range" min="0" max="255" step="1" class="slider__picker R" name="r_input" value="255">
+  								<button class="red" name="red__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>G</span>
+  								<input type="number" name="g" value="0">
+  								<input type="range" min="0" max="255" step="1" class="slider__picker G" name="g_input" value="0">
+  								<button class="green" name="green__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>B</span>
+  								<input type="number" name="b" value="0">
+  								<input type="range" min="0" max="255" step="1" class="slider__picker B" name="b_input" value="0">
+  								<button class="blue" name="blue__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline">
+  								<span>A</span>
+  								<input type="number" name="a" value="1">
+  								<input type="range" min="0" max="1" step="0.01" value="1" class="slider__picker A" name="a_input">
+  								<button class="alpha" name="alpha__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  					    </div>
+
+  		                <!--HSLA SLIDERS-->
+  		                <div class="sliders__colorpicker __two __active">
+  							<div class="slider-inline">
+  								<span>H</span>
+  								<input type="number" name="h" value="0">
+  								<input type="range" min="0" max="360" step="1" value="0" class="slider__picker H" name="h_input">
+  								<button class="hue" name="hue__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>S</span>
+  								<input type="number" name="s" value="100">
+  								<input type="range" min="0" max="100" step="1" value="100" class="slider__picker S" name="s_input">
+  								<button class="sat" name="sat__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>L</span>
+  								<input type="number" name="l" value="50">
+  								<input type="range" min="0" max="100" step="1" value="50" class="slider__picker L" name="l_input">
+  								<button class="ligth" name="ligth__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline">
+  								<span>A</span>
+  								<input type="number" name="a_hsl" value="1">
+  								<input type="range" min="0" max="1" step="0.01" value="1" class="slider__picker A" name="a_hsl_input">
+  								<button class="alpha_hsla" name="alpha_hsla__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+  						</div>
+  					</div>
+
+  					<div class="__sliders __second__slider">
+
+  						<br>
+  						<button class="btn btn-default rgba__range__mode__btn" name="rgba__range__mode__btn">RGBA</button>
+  						<button class="btn btn-default hsla__range__mode__btn" name="hsla__range__mode__btn">HSLA</button>
+  						<br>
+  						<!-- HSLA Range Slider -->
+
+  						<div class="sliders__colorpicker __four __active">
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>H</span>
+  								<input type="number" name="h_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="h_range_input_2" style="width: 30px;" value="360">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="360" value="0" class="range__slider__double H_range" name="h_range_1">
+  		  							<input type="range" min="0" max="360" value="360" class="range__slider__double bottom_thumb H_range" name="h_range_2">
+  								</div>
+
+  								<button class="hue"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>S</span>
+  								<input type="number" name="s_range_input_1" style="width: 30px;" value="100">
+  								<input type="number" name="s_range_input_2" style="width: 30px;" value="0">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="100" value="100" class="range__slider__double" name="s_range_1">
+  		  							<input type="range" min="0" max="100" value="0" class="range__slider__double bottom_thumb" name="s_range_2">
+  								</div>
+  								<button class="sat"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>L</span>
+  								<input type="number" name="l_range_input_1" style="width: 30px;" value="50">
+  								<input type="number" name="l_range_input_2" style="width: 30px;" value="0">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="100" value="50" class="range__slider__double" name="l_range_1">
+  		  							<input type="range" min="0" max="100" value="0" class="range__slider__double bottom_thumb" name="l_range_2">
+  								</div>
+  								<button class="ligth"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>A</span>
+  								<input type="number" name="ahsla_range_input_1" style="width: 30px;" value="1">
+  								<input type="number" name="ahsla_range_input_2" style="width: 30px;" value="1">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="1" step="0.01" value="1" class="range__slider__double A_range" name="ahsla_range_1">
+  		  							<input type="range" min="0" max="1" step="0.01" value="1" class="range__slider__double bottom_thumb A_range" name="ahsla_range_2">
+  								</div>
+  								<button class="alpha_hsla"><i class="fa fa-lock"></i></button>
+  							</div>
+  						</div>
+
+  						<!-- RGBA Range Slider -->
+
+  						<div class="sliders__colorpicker __tree">
+  							<div class="slider-inline">
+  								<span>R</span>
+  								<input type="number" name="r_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="r_range_input_2" style="width: 30px;" min="0" max="255" value="255">
+  								<div class="range__slider">
+  		  							<input type="range" name="r_range_1" min="0" max="255" value="0" class="range__slider__double R_range">
+  		  							<input type="range" name="r_range_2" min="0" max="255" value="255" class="range__slider__double bottom_thumb R_range">
+  								</div>
+  								<button class="red"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>G</span>
+  								<input type="number"  name="g_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="g_range_input_2" style="width: 30px;" value="255">
+  								<div class="range__slider">
+  		  							<input type="range" name="g_range_1" min="0" max="255" value="0" class="range__slider__double G_range">
+  		  							<input type="range" name="g_range_2" min="0" max="255" value="255" class="range__slider__double bottom_thumb G_range">
+  								</div>
+  								<button class="green"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>B</span>
+  								<input type="number" name="b_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="b_range_input_2" style="width: 30px;" value="255">
+  								<div class="range__slider">
+  		  							<input type="range" name="b_range_1" min="0" max="255" value="0" class="range__slider__double B_range">
+  		  							<input type="range" name="b_range_2" min="0" max="255" value="255" class="range__slider__double bottom_thumb B_range">
+  								</div>
+  								<button class="blue"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline">
+  								<span>A</span>
+  								<input type="number" name="a_range_input_1" style="width: 30px;" value="1">
+  								<input type="number" name="a_range_input_2" style="width: 30px;" value="1">
+  								<div class="range__slider">
+  		  							<input type="range" name="a_range_1" min="0" max="1" step="0.01" value="1" class="range__slider__double A_range">
+  		  							<input type="range" name="a_range_2" min="0" max="1" step="0.01" value="1" class="range__slider__double bottom_thumb A_range">
+  								</div>
+  								<button class="alpha"><i class="fa fa-lock"></i></button>
+  							</div>
+  						</div>
+
+
+
+  					</div>
+
+  					<label for="color-input" class="background-label" name="color-label" id="color-label" style="background-color: red"></label>
+  					<input type="checkbox" id="color-input" checked>
+
+  					<div class="HA__slider">
+  						<input type="range" min="0" max="360" value="0" name="HA__SLIDER">
+  					</div>
+
+		      	</div>
+	    </li>
+	    <li>
+		    	<a class="cl4-Option" id="COLOR4" href="#"><i class="fa fa-lock"></i>cl4</a>
+		   		<div id="cl4" class="CP__container" >
+
+					<button class="btn btn-default exact__match__mode__btn" name="exact__match__mode__btn">Exact Match</button>
+  					<button class="btn btn-default range__match__mode__btn" name="range__match__mode__btn">Range</button>
+  					<br><br>
+
+  					<div class="container-picker">
+  						<div id="color-picker">
+  							<canvas id="color-block" name="color-block" height="120" width="120"></canvas>
+  							<button class="pickersito" name="pickersito"></button>
+  							<canvas id="color-strip" name="color-strip" height="120" width="30"></canvas>
+  							<button class="estrpsito" name="estripsito"></button>
+  						</div>
+
+  						<div class="vertical__buttons">
+  							<div class="container_inline">
+  								<label for="HUE">HUE</label>
+  								<input type="number" value="0" placeholder="HUE" class=" toggle__picker hsla__mode" name="hue_mode"/>
+  							</div>
+  							<div class="container_inline">
+  								<label for="SAT">SAT</label>
+  								<input type="number" value="100" placeholder="SAT" class="toggle__picker hsla__mode_2" name="sat_mode">
+  							</div>
+  							<div class="container_inline">
+  								<label for="LIGHT">LIGHT</label>
+  								<input type="number" value="50" placeholder="LIGHT" class="toggle__picker hsla__mode_3" name="ligth_mode">
+  							</div>
+  						</div>
+  					</div>
+  					<div class="horizontal__buttons">
+  							<input type="text" name="hex_code" class="hex_input">
+  							<label for="RED">R</label>
+  							<input type="number" id="RED" value="255" placeholder="RED" class="toggle__picker rgba__mode" name="red_mode">
+  							<label for="GREEN">G</label>
+  							<input type="number" id="GREEN" value="0" placeholder="GREEN" class="toggle__picker rgba__mode_2" name="green_mode">
+  							<label for="BLUE">B</label>
+  							<input type="number" id="BLUE" value="0" placeholder="BLUE" class="toggle__picker rgba__mode_3" name="blue_mode">
+  							<label for="OPACITY">A</label>
+  							<input type="number" id="OPACITY" value="1" placeholder="OPACITY" class="toggle__picker rgba__mode_4" name="opacity_mode">
+  					</div>
+
+  					<div class="__sliders __first__slider __active">
+  						<br>
+  						<button class="btn btn-default rgba__mode__btn" name="rgba__mode__btn">RGBA</button>
+  						<button class="btn btn-default hsla__mode__btn" name="hsla__mode__btn">HSLA</button>
+
+  						<div class="sliders__colorpicker __one">
+  							<div class="slider-inline">
+  								<span>R</span>
+  								<input type="number" name="r" value="255">
+  								<input type="range" min="0" max="255" step="1" class="slider__picker R" name="r_input" value="255">
+  								<button class="red" name="red__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>G</span>
+  								<input type="number" name="g" value="0">
+  								<input type="range" min="0" max="255" step="1" class="slider__picker G" name="g_input" value="0">
+  								<button class="green" name="green__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>B</span>
+  								<input type="number" name="b" value="0">
+  								<input type="range" min="0" max="255" step="1" class="slider__picker B" name="b_input" value="0">
+  								<button class="blue" name="blue__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline">
+  								<span>A</span>
+  								<input type="number" name="a" value="1">
+  								<input type="range" min="0" max="1" step="0.01" value="1" class="slider__picker A" name="a_input">
+  								<button class="alpha" name="alpha__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  					    </div>
+
+  		                <!--HSLA SLIDERS-->
+  		                <div class="sliders__colorpicker __two __active">
+  							<div class="slider-inline">
+  								<span>H</span>
+  								<input type="number" name="h" value="0">
+  								<input type="range" min="0" max="360" step="1" value="0" class="slider__picker H" name="h_input">
+  								<button class="hue" name="hue__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>S</span>
+  								<input type="number" name="s" value="100">
+  								<input type="range" min="0" max="100" step="1" value="100" class="slider__picker S" name="s_input">
+  								<button class="sat" name="sat__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>L</span>
+  								<input type="number" name="l" value="50">
+  								<input type="range" min="0" max="100" step="1" value="50" class="slider__picker L" name="l_input">
+  								<button class="ligth" name="ligth__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline">
+  								<span>A</span>
+  								<input type="number" name="a_hsl" value="1">
+  								<input type="range" min="0" max="1" step="0.01" value="1" class="slider__picker A" name="a_hsl_input">
+  								<button class="alpha_hsla" name="alpha_hsla__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+  						</div>
+  					</div>
+
+  					<div class="__sliders __second__slider">
+
+  						<br>
+  						<button class="btn btn-default rgba__range__mode__btn" name="rgba__range__mode__btn">RGBA</button>
+  						<button class="btn btn-default hsla__range__mode__btn" name="hsla__range__mode__btn">HSLA</button>
+  						<br>
+  						<!-- HSLA Range Slider -->
+
+  						<div class="sliders__colorpicker __four __active">
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>H</span>
+  								<input type="number" name="h_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="h_range_input_2" style="width: 30px;" value="360">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="360" value="0" class="range__slider__double H_range" name="h_range_1">
+  		  							<input type="range" min="0" max="360" value="360" class="range__slider__double bottom_thumb H_range" name="h_range_2">
+  								</div>
+
+  								<button class="hue"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>S</span>
+  								<input type="number" name="s_range_input_1" style="width: 30px;" value="100">
+  								<input type="number" name="s_range_input_2" style="width: 30px;" value="0">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="100" value="100" class="range__slider__double" name="s_range_1">
+  		  							<input type="range" min="0" max="100" value="0" class="range__slider__double bottom_thumb" name="s_range_2">
+  								</div>
+  								<button class="sat"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>L</span>
+  								<input type="number" name="l_range_input_1" style="width: 30px;" value="50">
+  								<input type="number" name="l_range_input_2" style="width: 30px;" value="0">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="100" value="50" class="range__slider__double" name="l_range_1">
+  		  							<input type="range" min="0" max="100" value="0" class="range__slider__double bottom_thumb" name="l_range_2">
+  								</div>
+  								<button class="ligth"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>A</span>
+  								<input type="number" name="ahsla_range_input_1" style="width: 30px;" value="1">
+  								<input type="number" name="ahsla_range_input_2" style="width: 30px;" value="1">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="1" step="0.01" value="1" class="range__slider__double A_range" name="ahsla_range_1">
+  		  							<input type="range" min="0" max="1" step="0.01" value="1" class="range__slider__double bottom_thumb A_range" name="ahsla_range_2">
+  								</div>
+  								<button class="alpha_hsla"><i class="fa fa-lock"></i></button>
+  							</div>
+  						</div>
+
+  						<!-- RGBA Range Slider -->
+
+  						<div class="sliders__colorpicker __tree">
+  							<div class="slider-inline">
+  								<span>R</span>
+  								<input type="number" name="r_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="r_range_input_2" style="width: 30px;" min="0" max="255" value="255">
+  								<div class="range__slider">
+  		  							<input type="range" name="r_range_1" min="0" max="255" value="0" class="range__slider__double R_range">
+  		  							<input type="range" name="r_range_2" min="0" max="255" value="255" class="range__slider__double bottom_thumb R_range">
+  								</div>
+  								<button class="red"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>G</span>
+  								<input type="number"  name="g_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="g_range_input_2" style="width: 30px;" value="255">
+  								<div class="range__slider">
+  		  							<input type="range" name="g_range_1" min="0" max="255" value="0" class="range__slider__double G_range">
+  		  							<input type="range" name="g_range_2" min="0" max="255" value="255" class="range__slider__double bottom_thumb G_range">
+  								</div>
+  								<button class="green"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>B</span>
+  								<input type="number" name="b_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="b_range_input_2" style="width: 30px;" value="255">
+  								<div class="range__slider">
+  		  							<input type="range" name="b_range_1" min="0" max="255" value="0" class="range__slider__double B_range">
+  		  							<input type="range" name="b_range_2" min="0" max="255" value="255" class="range__slider__double bottom_thumb B_range">
+  								</div>
+  								<button class="blue"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline">
+  								<span>A</span>
+  								<input type="number" name="a_range_input_1" style="width: 30px;" value="1">
+  								<input type="number" name="a_range_input_2" style="width: 30px;" value="1">
+  								<div class="range__slider">
+  		  							<input type="range" name="a_range_1" min="0" max="1" step="0.01" value="1" class="range__slider__double A_range">
+  		  							<input type="range" name="a_range_2" min="0" max="1" step="0.01" value="1" class="range__slider__double bottom_thumb A_range">
+  								</div>
+  								<button class="alpha"><i class="fa fa-lock"></i></button>
+  							</div>
+  						</div>
+
+
+
+  					</div>
+
+  					<label for="color-input" class="background-label" name="color-label" id="color-label" style="background-color: red"></label>
+  					<input type="checkbox" id="color-input" checked>
+
+  					<div class="HA__slider">
+  						<input type="range" min="0" max="360" value="0" name="HA__SLIDER">
+  					</div>
+  					
+		      	</div>
+	    </li>
+	    <li>
+		      	<a class="cl5-Option" id="COLOR5" href="#"><i class="fa fa-lock"></i>cl5</a>
+		      	<div id="cl5" class="CP__container">
+					 
+					<button class="btn btn-default exact__match__mode__btn" name="exact__match__mode__btn">Exact Match</button>
+  					<button class="btn btn-default range__match__mode__btn" name="range__match__mode__btn">Range</button>
+  					<br><br>
+
+  					<div class="container-picker">
+  						<div id="color-picker">
+  							<canvas id="color-block" name="color-block" height="120" width="120"></canvas>
+  							<button class="pickersito" name="pickersito"></button>
+  							<canvas id="color-strip" name="color-strip" height="120" width="30"></canvas>
+  							<button class="estrpsito" name="estripsito"></button>
+  						</div>
+
+  						<div class="vertical__buttons">
+  							<div class="container_inline">
+  								<label for="HUE">HUE</label>
+  								<input type="number" value="0" placeholder="HUE" class=" toggle__picker hsla__mode" name="hue_mode"/>
+  							</div>
+  							<div class="container_inline">
+  								<label for="SAT">SAT</label>
+  								<input type="number" value="100" placeholder="SAT" class="toggle__picker hsla__mode_2" name="sat_mode">
+  							</div>
+  							<div class="container_inline">
+  								<label for="LIGHT">LIGHT</label>
+  								<input type="number" value="50" placeholder="LIGHT" class="toggle__picker hsla__mode_3" name="ligth_mode">
+  							</div>
+  						</div>
+  					</div>
+  					<div class="horizontal__buttons">
+  							<input type="text" name="hex_code" class="hex_input">
+  							<label for="RED">R</label>
+  							<input type="number" id="RED" value="255" placeholder="RED" class="toggle__picker rgba__mode" name="red_mode">
+  							<label for="GREEN">G</label>
+  							<input type="number" id="GREEN" value="0" placeholder="GREEN" class="toggle__picker rgba__mode_2" name="green_mode">
+  							<label for="BLUE">B</label>
+  							<input type="number" id="BLUE" value="0" placeholder="BLUE" class="toggle__picker rgba__mode_3" name="blue_mode">
+  							<label for="OPACITY">A</label>
+  							<input type="number" id="OPACITY" value="1" placeholder="OPACITY" class="toggle__picker rgba__mode_4" name="opacity_mode">
+  					</div>
+
+  					<div class="__sliders __first__slider __active">
+  						<br>
+  						<button class="btn btn-default rgba__mode__btn" name="rgba__mode__btn">RGBA</button>
+  						<button class="btn btn-default hsla__mode__btn" name="hsla__mode__btn">HSLA</button>
+
+  						<div class="sliders__colorpicker __one">
+  							<div class="slider-inline">
+  								<span>R</span>
+  								<input type="number" name="r" value="255">
+  								<input type="range" min="0" max="255" step="1" class="slider__picker R" name="r_input" value="255">
+  								<button class="red" name="red__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>G</span>
+  								<input type="number" name="g" value="0">
+  								<input type="range" min="0" max="255" step="1" class="slider__picker G" name="g_input" value="0">
+  								<button class="green" name="green__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>B</span>
+  								<input type="number" name="b" value="0">
+  								<input type="range" min="0" max="255" step="1" class="slider__picker B" name="b_input" value="0">
+  								<button class="blue" name="blue__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline">
+  								<span>A</span>
+  								<input type="number" name="a" value="1">
+  								<input type="range" min="0" max="1" step="0.01" value="1" class="slider__picker A" name="a_input">
+  								<button class="alpha" name="alpha__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  					    </div>
+
+  		                <!--HSLA SLIDERS-->
+  		                <div class="sliders__colorpicker __two __active">
+  							<div class="slider-inline">
+  								<span>H</span>
+  								<input type="number" name="h" value="0">
+  								<input type="range" min="0" max="360" step="1" value="0" class="slider__picker H" name="h_input">
+  								<button class="hue" name="hue__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>S</span>
+  								<input type="number" name="s" value="100">
+  								<input type="range" min="0" max="100" step="1" value="100" class="slider__picker S" name="s_input">
+  								<button class="sat" name="sat__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>L</span>
+  								<input type="number" name="l" value="50">
+  								<input type="range" min="0" max="100" step="1" value="50" class="slider__picker L" name="l_input">
+  								<button class="ligth" name="ligth__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline">
+  								<span>A</span>
+  								<input type="number" name="a_hsl" value="1">
+  								<input type="range" min="0" max="1" step="0.01" value="1" class="slider__picker A" name="a_hsl_input">
+  								<button class="alpha_hsla" name="alpha_hsla__lock"><i class="fa fa-lock"></i></button>
+  							</div>
+  						</div>
+  					</div>
+
+  					<div class="__sliders __second__slider">
+
+  						<br>
+  						<button class="btn btn-default rgba__range__mode__btn" name="rgba__range__mode__btn">RGBA</button>
+  						<button class="btn btn-default hsla__range__mode__btn" name="hsla__range__mode__btn">HSLA</button>
+  						<br>
+  						<!-- HSLA Range Slider -->
+
+  						<div class="sliders__colorpicker __four __active">
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>H</span>
+  								<input type="number" name="h_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="h_range_input_2" style="width: 30px;" value="360">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="360" value="0" class="range__slider__double H_range" name="h_range_1">
+  		  							<input type="range" min="0" max="360" value="360" class="range__slider__double bottom_thumb H_range" name="h_range_2">
+  								</div>
+
+  								<button class="hue"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>S</span>
+  								<input type="number" name="s_range_input_1" style="width: 30px;" value="100">
+  								<input type="number" name="s_range_input_2" style="width: 30px;" value="0">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="100" value="100" class="range__slider__double" name="s_range_1">
+  		  							<input type="range" min="0" max="100" value="0" class="range__slider__double bottom_thumb" name="s_range_2">
+  								</div>
+  								<button class="sat"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>L</span>
+  								<input type="number" name="l_range_input_1" style="width: 30px;" value="50">
+  								<input type="number" name="l_range_input_2" style="width: 30px;" value="0">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="100" value="50" class="range__slider__double" name="l_range_1">
+  		  							<input type="range" min="0" max="100" value="0" class="range__slider__double bottom_thumb" name="l_range_2">
+  								</div>
+  								<button class="ligth"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline" style="padding: 10px 0;">
+  								<span>A</span>
+  								<input type="number" name="ahsla_range_input_1" style="width: 30px;" value="1">
+  								<input type="number" name="ahsla_range_input_2" style="width: 30px;" value="1">
+  								<!-- Range Slider -->
+  								<div class="range__slider">
+  		  							<input type="range" min="0" max="1" step="0.01" value="1" class="range__slider__double A_range" name="ahsla_range_1">
+  		  							<input type="range" min="0" max="1" step="0.01" value="1" class="range__slider__double bottom_thumb A_range" name="ahsla_range_2">
+  								</div>
+  								<button class="alpha_hsla"><i class="fa fa-lock"></i></button>
+  							</div>
+  						</div>
+
+  						<!-- RGBA Range Slider -->
+
+  						<div class="sliders__colorpicker __tree">
+  							<div class="slider-inline">
+  								<span>R</span>
+  								<input type="number" name="r_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="r_range_input_2" style="width: 30px;" min="0" max="255" value="255">
+  								<div class="range__slider">
+  		  							<input type="range" name="r_range_1" min="0" max="255" value="0" class="range__slider__double R_range">
+  		  							<input type="range" name="r_range_2" min="0" max="255" value="255" class="range__slider__double bottom_thumb R_range">
+  								</div>
+  								<button class="red"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>G</span>
+  								<input type="number"  name="g_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="g_range_input_2" style="width: 30px;" value="255">
+  								<div class="range__slider">
+  		  							<input type="range" name="g_range_1" min="0" max="255" value="0" class="range__slider__double G_range">
+  		  							<input type="range" name="g_range_2" min="0" max="255" value="255" class="range__slider__double bottom_thumb G_range">
+  								</div>
+  								<button class="green"><i class="fa fa-lock"></i></button>
+  							</div>
+
+  							<div class="slider-inline">
+  								<span>B</span>
+  								<input type="number" name="b_range_input_1" style="width: 30px;" value="0">
+  								<input type="number" name="b_range_input_2" style="width: 30px;" value="255">
+  								<div class="range__slider">
+  		  							<input type="range" name="b_range_1" min="0" max="255" value="0" class="range__slider__double B_range">
+  		  							<input type="range" name="b_range_2" min="0" max="255" value="255" class="range__slider__double bottom_thumb B_range">
+  								</div>
+  								<button class="blue"><i class="fa fa-lock"></i></button>
+  							</div>
+
+
+  							<div class="slider-inline">
+  								<span>A</span>
+  								<input type="number" name="a_range_input_1" style="width: 30px;" value="1">
+  								<input type="number" name="a_range_input_2" style="width: 30px;" value="1">
+  								<div class="range__slider">
+  		  							<input type="range" name="a_range_1" min="0" max="1" step="0.01" value="1" class="range__slider__double A_range">
+  		  							<input type="range" name="a_range_2" min="0" max="1" step="0.01" value="1" class="range__slider__double bottom_thumb A_range">
+  								</div>
+  								<button class="alpha"><i class="fa fa-lock"></i></button>
+  							</div>
+  						</div>
+
+  					</div>
+
+  					<label for="color-input" class="background-label" name="color-label" id="color-label" style="background-color: red"></label>
+  					<input type="checkbox" id="color-input" checked>
+
+  					<div class="HA__slider">
+  						<input type="range" min="0" max="360" value="0" name="HA__SLIDER">
+  					</div>
+		      	</div>
+	    </li>
+  	</ul>
+
+</template>

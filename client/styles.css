@@ -1,0 +1,448 @@
+.CP__container {
+  display: none;
+  margin: 20px 10px 70px;
+} 
+
+input[type=range]:focus {
+  outline: none; 
+}
+
+#color-input {
+  display: none;
+}
+#color-label {
+  } 
+
+.background-label {
+  margin-left: 22px;
+  position: absolute;
+  height: 42px;
+  width: 303px;
+
+} 
+
+#color-input:checked ~ #color-picker {
+  opacity: 1;
+}
+
+#color-picker {
+  background-color: white;
+  height: 150px;
+  width: 185px;
+  border: solid 1px #ccc;
+  padding: 5px;
+}
+
+canvas:hover {
+  cursor: crosshair;
+}
+
+.pickersito {
+    width: 10px;
+    background: transparent;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid #FFF;
+    position: absolute;
+    top: 34px;
+    left: 14px
+}
+
+.estrpsito {
+    width: 30px;
+    background: transparent;
+    height: 5px;
+    border: 2px solid white;
+    position: absolute;
+    top: 35px;
+    left: 165px; 
+}
+
+.__sliders {
+  display: none;
+}
+
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.center-option {
+  width: 80%;
+  margin: 5px auto;
+  text-align: center;
+}
+
+/*COLORPICKER*/
+.container-picker {
+  width: 430px;
+  height: 150px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.color__picker {
+  width: 245px;
+  height: 215px;
+  background-color: red;
+  background: -webkit-linear-gradient(top, hsl(0, 0%, 100%) 0%, hsla(0, 0%, 100%, 0) 50%, hsla(0, 0%, 0%, 0) 50%, hsl(0, 0%, 0%) 100%), -webkit-linear-gradient(left, hsl(0, 0%, 50%) 0%, hsla(0, 0%, 50%, 0) 100%);
+}
+
+.color__picker:hover {
+  cursor: crosshair;
+}
+
+.vertical__buttons {
+  margin: 0 10px;
+}
+
+.vertical__buttons input[type=number]:focus {
+  outline: 0
+}
+
+.horizaontal__buttons input[type=number]:focus {
+  outline: 0
+}
+
+.vertical__buttons input[type=number] {
+  display: inline-block;
+  margin: 5px;
+  width: 60px;
+  height: 30px;
+  background: #ccc;
+  padding: 2.5px 10px;
+  border: none;
+}
+
+.container_inline {
+  display: flex;
+}
+
+.container_inline label {
+    display: inline-block;
+    position: relative;
+    top: 15px;
+    width: 50px;
+}
+
+.horizontal__buttons {
+  width: 435px;    
+}
+
+.horizontal__buttons input {
+    width: 53px;
+    height: 10px;
+    padding: 10px 5px;
+    position: relative;
+    top: 0px;
+}
+
+.horizontal__buttons input[type=number] {
+  padding: 2.5px;
+  width: 45px;
+  height: 30px;
+  background: #ccc;
+  border: none;
+  font-size: 10px;
+}
+.horizontal__buttons label {
+  font-size: 11px;
+}
+
+.sliders__colorpicker {
+  display: none;
+  height: 200px;
+}
+
+.__active {
+  display: block;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.slider-inline {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px 0;
+}
+
+.slider-inline span {
+  position: relative;
+  top:5px;
+  display: inline-block;
+}
+
+.slider-inline input[type=number] {
+  width: 25px;
+  height: 10px;
+  padding: 5px;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.slider-inline button {
+  background-color: #ccc;
+  border: none;
+  display: inline-block;
+  margin: 0 10px;
+  width: 30px;
+  height: 30px;
+}
+
+.slider-inline button:hover {
+  cursor: pointer;
+}
+
+input[type=range].slider__picker {
+  width: 215px;
+}
+
+input[type=range].slider__picker:focus {
+  outline: none;
+}
+
+input[type=range].slider__picker::-webkit-slider-runnable-track {
+  width: 120px !important;
+  height: 22px;
+  cursor: pointer;
+
+}
+
+input[type=range].slider__picker::-webkit-slider-thumb {
+  
+  background-color: white;
+  height: 22px;
+  width: 2px;
+  cursor: pointer;
+
+
+}
+
+.H { 
+  background: linear-gradient(to right, rgba(255, 0, 0, 1), rgba(255, 165, 0, 1),rgba(255, 255, 0, 1), rgba(0, 255, 0, 1), rgba(0, 0, 255, 1),  rgba(75, 0, 130, 1),  rgba(128, 0, 128, 1)) !important;
+  background: -webkit-linear-gradient(to right, rgba(255, 0, 0, 1), rgba(255, 165, 0, 1),rgba(255, 255, 0, 1), rgba(0, 255, 0, 1), rgba(0, 0, 255, 1),  rgba(75, 0, 130, 1),  rgba(128, 0, 128, 1)) !important;
+}
+
+.H::-webkit-slider-runnable-track { 
+  background: linear-gradient(to right, rgba(255, 0, 0, 1), rgba(255, 165, 0, 1),rgba(255, 255, 0, 1), rgba(0, 255, 0, 1), rgba(0, 0, 255, 1),  rgba(75, 0, 130, 1),  rgba(128, 0, 128, 1)) !important;
+  background: -webkit-linear-gradient(to right, rgba(255, 0, 0, 1), rgba(255, 165, 0, 1),rgba(255, 255, 0, 1), rgba(0, 255, 0, 1), rgba(0, 0, 255, 1),  rgba(75, 0, 130, 1),  rgba(128, 0, 128, 1)) !important;
+}
+
+.H_range::-webkit-slider-runnable-track  {
+   background: linear-gradient(to right, rgba(255, 0, 0, 1), rgba(255, 165, 0, 1),rgba(255, 255, 0, 1), rgba(0, 255, 0, 1), rgba(0, 0, 255, 1),  rgba(75, 0, 130, 1),  rgba(128, 0, 128, 1)) !important;
+   background: -webkit-linear-gradient(to right, rgba(255, 0, 0, 1), rgba(255, 165, 0, 1),rgba(255, 255, 0, 1), rgba(0, 255, 0, 1), rgba(0, 0, 255, 1),  rgba(75, 0, 130, 1),  rgba(128, 0, 128, 1)) !important;
+}
+
+.R::-webkit-slider-runnable-track {
+  background-image: linear-gradient(30deg, #380000, #720000, #a20000, #c30000, #ff0000) !important;
+  background-image: -webkit-linear-gradient(30deg, #380000, #720000, #a20000, #c30000, #ff0000) !important;
+}
+
+.R_range::-webkit-slider-runnable-track {
+  background-image: linear-gradient(30deg, #380000, #720000, #a20000, #c30000, #ff0000) !important;
+  background-image: -webkit-linear-gradient(30deg, #380000, #720000, #a20000, #c30000, #ff0000) !important;
+}
+
+.G::-webkit-slider-runnable-track {
+  background-image: linear-gradient(30deg, #002100, #389000, #38af00, #38e200, #38ff00) !important;
+  background-image: -webkit-linear-gradient(30deg, #002100, #389000, #38af00, #38e200, #38ff00) !important;
+}
+
+.G_range::-webkit-slider-runnable-track {
+  background-image: linear-gradient(30deg, #002100, #389000, #38af00, #38e200, #38ff00) !important;
+  background-image: -webkit-linear-gradient(30deg, #002100, #389000, #38af00, #38e200, #38ff00) !important;
+}
+
+.B::-webkit-slider-runnable-track {
+  background-image: linear-gradient(30deg, #000053, #000084, #0000a5, #0000ca, #0000ff) !important;
+  background-image: -webkit-linear-gradient(30deg, #000053, #000084, #0000a5, #0000ca, #0000ff) !important;
+}
+
+.B_range::-webkit-slider-runnable-track {
+  background-image: linear-gradient(30deg, #000053, #000084, #0000a5, #0000ca, #0000ff) !important;
+  background-image: -webkit-linear-gradient(30deg, #000053, #000084, #0000a5, #0000ca, #0000ff) !important;
+}
+
+.S {
+    -webkit-appearance: none;
+    background-color: silver;
+    width: 215px;
+    height: 23px;
+}
+
+.L {
+   -webkit-appearance: none;
+    background-color: silver;
+    width: 215px;
+    height: 23px;
+}
+
+.A::-webkit-slider-runnable-track {
+    width: 200px;
+    height: 100%;
+    background: url(https://mdn.mozillademos.org/files/6089/alpha_mask.png) no-repeat;
+}
+
+.A_range::-webkit-slider-runnable-track {
+    background: url(https://mdn.mozillademos.org/files/6089/alpha_mask.png) no-repeat!important;
+}
+
+/*Range Slider CSS*/
+.range__slider input[type=range] {
+  display: block;
+}
+
+
+.range__slider__double {
+  width: 215px;
+  height: 10px;
+  margin: 0;
+
+  
+}
+
+.range__slider__double:focus {
+  outline: none;
+}
+
+.range__slider__double::-webkit-slider-runnable-track {
+  width: 120px !important;
+  height: 52px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  background-color: silver;
+}
+
+.range__slider__double::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+  z-index: 1001;
+  margin-top: -15px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+
+.range__slider__double.bottom_thumb::-webkit-slider-thumb {
+  margin-top: 0px;
+}
+
+.range__slider__double::-webkit-slider-runnable-track {
+    width: 200px;
+    height: 100%;
+    -webkit-appearance: none !important;
+    background-color: silver !important;
+}
+
+.HA__slider {
+  width: 70%;
+  height: 40px;
+  padding: 5px;
+  border-radius: 20px;
+  background: #453939;
+  position: absolute;
+  bottom: 2.5%;
+  left: 15%;
+  text-align: center;
+}
+
+.HA__slider input[type=range] {
+  -webkit-appearance: none;
+  width: 90%;
+  height: 35px;
+  border-radius: 20px;
+  background: transparent;
+ } 
+
+.HA__slider input[type=range]::-webkit-slider-runnable-track { 
+  border-radius: 20px;
+  background: linear-gradient(to right, rgba(255, 0, 0, 1), rgba(255, 165, 0, 1),rgba(255, 255, 0, 1), rgba(0, 255, 0, 1), rgba(0, 0, 255, 1),  rgba(75, 0, 130, 1),  rgba(128, 0, 128, 1)) !important;
+  background: -webkit-linear-gradient(to right, rgba(255, 0, 0, 1), rgba(255, 165, 0, 1),rgba(255, 255, 0, 1), rgba(0, 255, 0, 1), rgba(0, 0, 255, 1),  rgba(75, 0, 130, 1),  rgba(128, 0, 128, 1)) !important;
+}
+
+.HA__slider input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 1px solid #c8bebe;
+  height: 30px;
+  width: 30px;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  margin-top: -0px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
+}
+
+/* All the same stuff for Firefox */
+.HA__slider input[type=range]::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #c8bebe;
+  height: 30px;
+  width: 30px;
+  border-radius: 10px;
+  
+  background: transparent;
+  cursor: pointer;
+}
+
+/* All the same stuff for IE */
+.HA__slider input[type=range]::-ms-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #c8bebe;
+  height: 30px;
+  width: 10px;
+  border-radius: 30px;
+
+  background: transparent;
+  cursor: pointer;
+}
