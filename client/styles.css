@@ -446,3 +446,25 @@ input[type=range].slider__picker::-webkit-slider-thumb {
   background: transparent;
   cursor: pointer;
 }
+
+/* Harmonies */
+
+.harmony__container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 360px;
+}
+
+.harmony__item {
+  box-sizing: border-box;
+  display: inline-block;
+  width: 45%;
+  height: 42px;
+  background: #ccc;
+  margin: 2.5px auto;
+  padding: 10px;
+}
+
+.harmony__item button {
+  float: right;
+}

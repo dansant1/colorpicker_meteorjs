@@ -137,6 +137,86 @@ Template.ColorPicker.onRendered( () => {
 			hsl_string,
 			hex_code = "#000000";
 
+			function hexToComplimentary(hex) {
+
+		    // Convert hex to rgb
+		    // Credit to Denis http://stackoverflow.com/a/36253499/4939630
+		    var rgb = 'rgb(' + (hex = hex.replace('#', '')).match(new RegExp('(.{' + hex.length/3 + '})', 'g')).map(function(l) { return parseInt(hex.length%2 ? l+l : l, 16); }).join(',') + ')';
+
+		    // Get array of RGB values
+		    rgb = rgb.replace(/[^\d,]/g, '').split(',');
+
+		    var r = rgb[0], g = rgb[1], b = rgb[2];
+
+		    // Convert RGB to HSL
+		    // Adapted from answer by 0x000f http://stackoverflow.com/a/34946092/4939630
+		    r /= 255.0;
+		    g /= 255.0;
+		    b /= 255.0;
+		    var max = Math.max(r, g, b);
+		    var min = Math.min(r, g, b);
+		    var h, s, l = (max + min) / 2.0;
+
+		    if(max == min) {
+		        h = s = 0;  //achromatic
+		    } else {
+		        var d = max - min;
+		        s = (l > 0.5 ? d / (2.0 - max - min) : d / (max + min));
+
+		        if(max == r && g >= b) {
+		            h = 1.0472 * (g - b) / d ;
+		        } else if(max == r && g < b) {
+		            h = 1.0472 * (g - b) / d + 6.2832;
+		        } else if(max == g) {
+		            h = 1.0472 * (b - r) / d + 2.0944;
+		        } else if(max == b) {
+		            h = 1.0472 * (r - g) / d + 4.1888;
+		        }
+		    }
+
+		    h = h / 6.2832 * 360.0 + 0;
+
+		    // Shift hue to opposite side of wheel and convert to [0-1] value
+		    h+= 180;
+		    if (h > 360) { h -= 360; }
+		    h /= 360;
+
+		    // Convert h s and l values into r g and b values
+		    // Adapted from answer by Mohsen http://stackoverflow.com/a/9493060/4939630
+		    if(s === 0){
+		        r = g = b = l; // achromatic
+		    } else {
+		        var hue2rgb = function hue2rgb(p, q, t){
+		            if(t < 0) t += 1;
+		            if(t > 1) t -= 1;
+		            if(t < 1/6) return p + (q - p) * 6 * t;
+		            if(t < 1/2) return q;
+		            if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+		            return p;
+		        };
+
+		        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+		        var p = 2 * l - q;
+
+		        r = hue2rgb(p, q, h + 1/3);
+		        g = hue2rgb(p, q, h);
+		        b = hue2rgb(p, q, h - 1/3);
+		    }
+
+		    r = Math.round(r * 255);
+		    g = Math.round(g * 255); 
+		    b = Math.round(b * 255);
+
+		    // Convert r b and g values to hex
+		    rgb = b | (g << 8) | (r << 16); 
+		    return "#" + (0x1000000 | rgb).toString(16).substring(1);
+		}  
+
+		function ConvertHarmonies (hex) {
+			let complement = hexToComplimentary(hex)
+			document.querySelector(".complement").style.backgroundColor = complement
+		}
+
 		var colorLabel, colorStrip,
 		ctx1, ctx2, rgbaColor, width1, height1, width2, height2, colorBlock;
 		var drag = false;
@@ -1029,6 +1109,8 @@ Template.ColorPicker.onRendered( () => {
 
 				Hex_input[cl].value =  hex_code;
 
+				ConvertHarmonies(hex_code)
+
 				RGBA_MODE[cl].value = valor_r;
 
 				var hsl = rgbToHsl(valor_r, valor_g, valor_b)
@@ -1059,6 +1141,8 @@ Template.ColorPicker.onRendered( () => {
 
 				Hex_input[cl].value =  hex_code;
 
+				ConvertHarmonies(hex_code)
+
 				RGBA_MODE2[cl].value = valor_g;
 
 				var hsl = rgbToHsl(valor_r, valor_g, valor_b)
@@ -1086,6 +1170,8 @@ Template.ColorPicker.onRendered( () => {
 				hex_code = rgb2hex(rgba_string)
 
 				Hex_input[cl].value =  hex_code;
+
+				ConvertHarmonies(hex_code)
 
 				RGBA_MODE3[cl].value = valor_b;
 
@@ -1124,6 +1210,8 @@ Template.ColorPicker.onRendered( () => {
 				L[cl].value = valor_l;
 
 				hex_code = hslToHex(valor_h, valor_s, valor_l)
+
+				ConvertHarmonies(hex_code)
 
 				Hex_input[cl].value =  hex_code;
 
@@ -1164,6 +1252,8 @@ Template.ColorPicker.onRendered( () => {
 
 				Hex_input[cl].value =  hex_code;
 
+				ConvertHarmonies(hex_code)
+
     			S_slider[cl].value = valor_s;
 			})
 
@@ -1194,6 +1284,8 @@ Template.ColorPicker.onRendered( () => {
 
 				Hex_input[cl].value =  hex_code;
 
+				ConvertHarmonies(hex_code)
+
     			L_slider[cl].value = valor_l;
 			})
 
@@ -1213,6 +1305,8 @@ Template.ColorPicker.onRendered( () => {
 					hex_code = rgb2hex(rgba_string)
 
 					Hex_input[cl].value =  hex_code;
+
+					ConvertHarmonies(hex_code)
 
 					RGBA_MODE[cl].value = valor_r;
 
@@ -1239,6 +1333,8 @@ Template.ColorPicker.onRendered( () => {
 					changeColorFromInput(rgba_string, cl)
 
 					hex_code = rgb2hex(rgba_string)
+
+					ConvertHarmonies(hex_code)
 
 					Hex_input[cl].value =  hex_code;
 
@@ -1267,6 +1363,8 @@ Template.ColorPicker.onRendered( () => {
 
 					Hex_input[cl].value =  hex_code;
 
+					ConvertHarmonies(hex_code)
+
 					RGBA_MODE3[cl].value = valor_b;
 
 					var hsl = rgbToHsl(valor_r, valor_g, valor_b)
@@ -1292,6 +1390,8 @@ Template.ColorPicker.onRendered( () => {
 					changeColorFromInput(rgba_string, cl)
 
 					hex_code = rgb2hex(rgba_string)
+
+					ConvertHarmonies(hex_code)
 
 					Hex_input[cl].value =  hex_code;
 
@@ -1430,6 +1530,8 @@ Template.ColorPicker.onRendered( () => {
 					HSLA_MODE3[cl].value = hsl[2]
 
 	    			R[cl].value = valor_r;
+
+	    			ConvertHarmonies(hex_code)
 				});
 
 
@@ -1460,6 +1562,8 @@ Template.ColorPicker.onRendered( () => {
 					HSLA_MODE3[cl].value = hsl[2]
 
 	    			G[cl].value = valor_g;
+
+	    			ConvertHarmonies(hex_code)
 				});
 
 				B_slider[cl].addEventListener("input", function (e){
@@ -1488,6 +1592,8 @@ Template.ColorPicker.onRendered( () => {
 					HSLA_MODE3[cl].value = hsl[2]
 
 	    			B[cl].value = valor_b;
+
+	    			ConvertHarmonies(hex_code)
 				});
 
 				A_slider[cl].addEventListener("input", function (e){
@@ -1506,6 +1612,8 @@ Template.ColorPicker.onRendered( () => {
 					RGBA_MODE4[cl].value = valor_a;
 
 	    			A[cl].value = valor_a;
+
+	    			ConvertHarmonies(hex_code)
 				});
 
 				// HSLA
@@ -1528,7 +1636,7 @@ Template.ColorPicker.onRendered( () => {
 					var backgroundL = "-webkit-linear-gradient(left, hsla("+ valor_h +", 45%, 50%, 0),hsla("+ valor_h +", 45%, 50%, 0.2),hsla(" + valor_h + ", 45%, 50%, 0.4),hsla(" + valor_h + ", 45%, 50%, 0.6000000000000001),hsla(" + valor_h + ", 45%, 50%, 0.8),hsla(" + valor_h + ", 45%, 50%, 1))"
 					L_slider[cl].style.backgroundImage = backgroundL;
 
-	                Hex_input[cl].value = hslToHex(valor_h, valor_s, valor_l)
+	                Hex_input[cl].value = hex_code = hslToHex(valor_h, valor_s, valor_l)
 
 	                hsl_string = "hsl(" + valor_h + ", " + valor_s + "%, " + valor_l +  "%)"
 
@@ -1551,6 +1659,8 @@ Template.ColorPicker.onRendered( () => {
 					L[cl].value = L_slider[cl].value = valor_l
 
 	    			H[cl].value = valor_h;
+
+	    			ConvertHarmonies(hex_code)
 				});
 
 				S_slider[cl].addEventListener("input", function (e){
@@ -1562,7 +1672,7 @@ Template.ColorPicker.onRendered( () => {
 
 					hsl_string = "hsl(" + valor_h + ", " + valor_s + "%, " + valor_l +  "%)"
 
-					Hex_input[cl].value = hslToHex(valor_h, valor_s, valor_l)
+					Hex_input[cl].value = hex_code = hslToHex(valor_h, valor_s, valor_l)
 
 					var rgb = hslToRgb(valor_h, valor_s, valor_l)
 
@@ -1579,6 +1689,8 @@ Template.ColorPicker.onRendered( () => {
 					HSLA_MODE3[cl].value = valor_l;
 
 	    			S[cl].value = valor_s;
+
+	    			ConvertHarmonies(hex_code)
 				});
 
 				L_slider[cl].addEventListener("input", function (e){
@@ -1590,7 +1702,7 @@ Template.ColorPicker.onRendered( () => {
 
 					hsl_string = "hsl(" + valor_h + ", " + valor_s + "%, " + valor_l +  "%)"
 
-					Hex_input[cl].value = hslToHex(valor_h, valor_s, valor_l)
+					Hex_input[cl].value = hex_code = hslToHex(valor_h, valor_s, valor_l)
 
 					var rgb = hslToRgb(valor_h, valor_s, valor_l)
 
@@ -1607,6 +1719,8 @@ Template.ColorPicker.onRendered( () => {
 					HSLA_MODE3[cl].value = valor_l;
 
 	    			L[cl].value = valor_l;
+
+	    			ConvertHarmonies(hex_code)
 				});
 
 				AHSLA_slider[cl].addEventListener("input", function (e){
@@ -1627,6 +1741,8 @@ Template.ColorPicker.onRendered( () => {
 					RGBA_MODE4[cl].value = valor_a;
 
 	    			AHSLA[cl].value = valor_a;
+
+	    			ConvertHarmonies(hex_code)
 				});
 
 			H_RANGE_Slider_1[cl].addEventListener('input', function (e) {
@@ -1654,6 +1770,7 @@ Template.ColorPicker.onRendered( () => {
 				S_RANGE_Slider_2[cl].style.backgroundImage = backgroundS1
 
 
+				ConvertHarmonies(hex_code)
 
 				var backgroundL1 = "-webkit-linear-gradient(left, hsla("+ h +", 45%, 50%, 0),hsla("+ h +", 45%, 50%, 0.2),hsla(" + valor_h + ", 45%, 50%, 0.4),hsla(" + h + ", 45%, 50%, 0.6000000000000001),hsla(" + h + ", 45%, 50%, 0.8),hsla(" + h + ", 45%, 50%, 1))"
 				L_RANGE_Slider_1[cl].style.backgroundImage = backgroundL1;
@@ -1676,6 +1793,8 @@ Template.ColorPicker.onRendered( () => {
 				var l = parseInt(L_RANGE_INPUT_1[cl].value)
 				var rgb = hslToRgb(h, s, l)
 				var hex_code = hslToHex( h, s, l)
+
+				ConvertHarmonies(hex_code)
 
 				R_mode[cl].value = rgb[0]
 				G_mode[cl].value = rgb[1]
@@ -1712,6 +1831,8 @@ Template.ColorPicker.onRendered( () => {
 				var rgb = hslToRgb(h, s, l)
 				var hex_code = hslToHex( h, s, l)
 
+				ConvertHarmonies(hex_code)
+
 				R_mode[cl].value = rgb[0]
 				G_mode[cl].value = rgb[1]
 				B_mode[cl].value= rgb[2]
@@ -1739,6 +1860,8 @@ Template.ColorPicker.onRendered( () => {
 				var rgb = hslToRgb(h, s, l)
 				var hex_code = hslToHex( h, s, l)
 
+				ConvertHarmonies(hex_code)
+
 				R_mode[cl].value = rgb[0]
 				G_mode[cl].value = rgb[1]
 				B_mode[cl].value= rgb[2]
@@ -1763,6 +1886,7 @@ Template.ColorPicker.onRendered( () => {
 				var l = parseInt(L_RANGE_INPUT_1[cl].value)
 				var rgb = hslToRgb(h, s, l)
 				var hex_code = hslToHex( h, s, l)
+				ConvertHarmonies(hex_code)
 
 				R_mode[cl].value = rgb[0]
 				G_mode[cl].value = rgb[1]
@@ -1789,6 +1913,7 @@ Template.ColorPicker.onRendered( () => {
 				var l = parseInt(L_RANGE_INPUT_1[cl].value)
 				var rgb = hslToRgb(h, s, l)
 				var hex_code = hslToHex( h, s, l)
+				ConvertHarmonies(hex_code)
 
 				R_mode[cl].value = rgb[0]
 				G_mode[cl].value = rgb[1]
@@ -1814,6 +1939,7 @@ Template.ColorPicker.onRendered( () => {
 				var l = parseInt(L_RANGE_INPUT_2[cl].value)
 				var rgb = hslToRgb(h, s, l)
 				var hex_code = hslToHex( h, s, l)
+				ConvertHarmonies(hex_code)
 
 				R_mode[cl].value = rgb[0]
 				G_mode[cl].value = rgb[1]
@@ -1840,6 +1966,7 @@ Template.ColorPicker.onRendered( () => {
 				var l = parseInt(L_RANGE_INPUT_2[cl].value)
 				var rgb = hslToRgb(h, s, l)
 				var hex_code = hslToHex( h, s, l)
+				ConvertHarmonies(hex_code)
 
 				R_mode[cl].value = rgb[0]
 				G_mode[cl].value = rgb[1]
@@ -1865,6 +1992,7 @@ Template.ColorPicker.onRendered( () => {
 				var l = parseInt(L_RANGE_INPUT_1[cl].value)
 				var rgb = hslToRgb(h, s, l)
 				var hex_code = hslToHex( h, s, l)
+				ConvertHarmonies(hex_code)
 
 				R_mode[cl].value = rgb[0]
 				G_mode[cl].value = rgb[1]
@@ -1892,6 +2020,7 @@ Template.ColorPicker.onRendered( () => {
 				var l = parseInt(L_RANGE_INPUT_1[cl].value)
 				var rgb = hslToRgb(h, s, l)
 				var hex_code = hslToHex( h, s, l)
+				ConvertHarmonies(hex_code)
 
 				R_mode[cl].value = rgb[0]
 				G_mode[cl].value = rgb[1]
@@ -1918,6 +2047,7 @@ Template.ColorPicker.onRendered( () => {
 				var l = parseInt(L_RANGE_INPUT_2[cl].value)
 				var rgb = hslToRgb(h, s, l)
 				var hex_code = hslToHex( h, s, l)
+				ConvertHarmonies(hex_code)
 
 				R_mode[cl].value = rgb[0]
 				G_mode[cl].value = rgb[1]
@@ -1946,6 +2076,7 @@ Template.ColorPicker.onRendered( () => {
 				var l = parseInt(L_RANGE_INPUT_2[cl].value)
 				var rgb = hslToRgb(h, s, l)
 				var hex_code = hslToHex( h, s, l)
+				ConvertHarmonies(hex_code)
 
 				R_mode[cl].value = rgb[0]
 				G_mode[cl].value = rgb[1]
@@ -2043,6 +2174,8 @@ Template.ColorPicker.onRendered( () => {
 				var hsl = rgbToHsl(r, g, b)
 				var hex_code = hslToHex(hsl[0], hsl[1], hsl[2])
 
+				ConvertHarmonies(hex_code)
+
 				H_mode[cl].value = hsl[0]
 				HSLA_MODE2[cl].value = hsl[1]
 				HSLA_MODE3[cl].value = hsl[2]
@@ -2070,6 +2203,9 @@ Template.ColorPicker.onRendered( () => {
 				var hsl = rgbToHsl(r, g, b)
 				var hex_code = hslToHex(hsl[0], hsl[1], hsl[2])
 
+
+				ConvertHarmonies(hex_code)
+
 				H_mode[cl].value = hsl[0]
 				HSLA_MODE2[cl].value = hsl[1]
 				HSLA_MODE3[cl].value = hsl[2]
@@ -2095,6 +2231,8 @@ Template.ColorPicker.onRendered( () => {
 				var b = parseInt(B_RANGE_INPUT_1[cl].value)
 				var hsl = rgbToHsl(r, g, b)
 				var hex_code = hslToHex(hsl[0], hsl[1], hsl[2])
+
+				ConvertHarmonies(hex_code)
 
 				H_mode[cl].value = hsl[0]
 				HSLA_MODE2[cl].value = hsl[1]
@@ -2133,6 +2271,8 @@ Template.ColorPicker.onRendered( () => {
 
 				Hex_input[cl].value = hex_code;
 
+				ConvertHarmonies(hex_code)
+
 				var a = parseFloat(A_RANGE_INPUT_1[cl].value)
 
 				rgba_string = "rgba(" + r + ", " + b + ", " + g + ", " + a + ")"
@@ -2148,6 +2288,8 @@ Template.ColorPicker.onRendered( () => {
 				var b = parseInt(B_RANGE_INPUT_1[cl].value)
 				var hsl = rgbToHsl(r, g, b)
 				var hex_code = hslToHex(hsl[0], hsl[1], hsl[2])
+
+				ConvertHarmonies(hex_code)
 
 				H_mode[cl].value = hsl[0]
 				HSLA_MODE2[cl].value = hsl[1]
@@ -2175,6 +2317,7 @@ Template.ColorPicker.onRendered( () => {
 				var b = parseInt(B_RANGE_INPUT_1[cl].value)
 				var hsl = rgbToHsl(r, g, b)
 				var hex_code = hslToHex(hsl[0], hsl[1], hsl[2])
+				ConvertHarmonies(hex_code)
 
 				H_mode[cl].value = hsl[0]
 				HSLA_MODE2[cl].value = hsl[1]
@@ -2232,6 +2375,7 @@ Template.ColorPicker.onRendered( () => {
 				var b = parseInt(B_RANGE_INPUT_2[cl].value)
 				var hsl = rgbToHsl(r, g, b)
 				var hex_code = hslToHex(hsl[0], hsl[1], hsl[2])
+				ConvertHarmonies(hex_code)
 
 				H_mode[cl].value = hsl[0]
 				HSLA_MODE2[cl].value = hsl[1]
@@ -2259,6 +2403,7 @@ Template.ColorPicker.onRendered( () => {
 				var b = parseInt(B_RANGE_INPUT_2[cl].value)
 				var hsl = rgbToHsl(r, g, b)
 				var hex_code = hslToHex(hsl[0], hsl[1], hsl[2])
+				ConvertHarmonies(hex_code)
 
 				H_mode[cl].value = hsl[0]
 				HSLA_MODE2[cl].value = hsl[1]
@@ -2285,6 +2430,7 @@ Template.ColorPicker.onRendered( () => {
 				var b = parseInt(B_RANGE_INPUT_2[cl].value)
 				var hsl = rgbToHsl(r, g, b)
 				var hex_code = hslToHex(hsl[0], hsl[1], hsl[2])
+				ConvertHarmonies(hex_code)
 
 				H_mode[cl].value = hsl[0]
 				HSLA_MODE2[cl].value = hsl[1]
@@ -2312,6 +2458,7 @@ Template.ColorPicker.onRendered( () => {
 				var b = parseInt(B_RANGE_INPUT_2[cl].value)
 				var hsl = rgbToHsl(r, g, b)
 				var hex_code = hslToHex(hsl[0], hsl[1], hsl[2])
+				ConvertHarmonies(hex_code)
 
 				H_mode[cl].value = hsl[0]
 				HSLA_MODE2[cl].value = hsl[1]
@@ -2339,6 +2486,7 @@ Template.ColorPicker.onRendered( () => {
 				var b = parseInt(B_RANGE_INPUT_2[cl].value)
 				var hsl = rgbToHsl(r, g, b)
 				var hex_code = hslToHex(hsl[0], hsl[1], hsl[2])
+				ConvertHarmonies(hex_code)
 
 				H_mode[cl].value = hsl[0]
 				HSLA_MODE2[cl].value = hsl[1]
@@ -2366,6 +2514,7 @@ Template.ColorPicker.onRendered( () => {
 				var b = parseInt(B_RANGE_INPUT_2[cl].value)
 				var hsl = rgbToHsl(r, g, b)
 				var hex_code = hslToHex(hsl[0], hsl[1], hsl[2])
+				ConvertHarmonies(hex_code)
 
 				H_mode[cl].value = hsl[0]
 				HSLA_MODE2[cl].value = hsl[1]
@@ -2433,6 +2582,8 @@ Template.ColorPicker.onRendered( () => {
 				blue = rgb[2]
 
 				hex_code = hslToHex(hue, sat, ligth)
+
+				ConvertHarmonies(hex_code)
 
 				R_mode[cl].value = R[cl].value = R_slider[cl].value = red;
 				G_mode[cl].value = G[cl].value = G_slider[cl].value = green;
