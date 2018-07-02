@@ -44,6 +44,15 @@ Template.ColorPicker.onRendered( () => {
 		// COLOR OBJECT
 		var colorsObject = {}
 
+		// Harmonies Lock Buttons
+
+		var analogous = document.getElementsByName("analogous")[0],
+			triad = document.getElementsByName("triad")[0],
+			tetrad = document.getElementsByName("tetrad")[0],
+			monochromatic = document.getElementsByName("monochromatic")[0],
+			splitcomplement = document.getElementsByName("splitcomplement")[0],
+			complement = document.getElementsByName("complement")[0];
+
 		// Variables variables
 		var Hex_input = document.getElementsByName("hex_code");
 		var Hex_input2 = document.getElementsByName("hex_code2");
@@ -91,6 +100,14 @@ Template.ColorPicker.onRendered( () => {
 			B_RANGE_INPUT_2 = document.getElementsByName("b_range_input_2"),
 			A_RANGE_INPUT_2 = document.getElementsByName("a_range_input_2");
 
+		var cl1_lock = document.getElementsByName('color_1_lock')[0],
+				cl2_lock = document.getElementsByName('color_2_lock')[0],
+				cl3_lock = document.getElementsByName('color_3_lock')[0],
+				cl4_lock = document.getElementsByName('color_4_lock')[0],
+				cl5_lock = document.getElementsByName('color_5_lock')[0];
+
+				console.log(cl2_lock)
+
 		var	R_slider = document.getElementsByName("r_input"),
 			G_slider = document.getElementsByName("g_input"),
 			B_slider = document.getElementsByName("b_input"),
@@ -135,7 +152,11 @@ Template.ColorPicker.onRendered( () => {
 			rgb_string,
 			hsla_string,
 			hsl_string,
-			hex_code = "#000000";
+			hex_code = "#000000",
+
+			isMoving = false;
+			isMovingStrip = false;
+		    		    
 
 			function hexToComplimentary(hex) {
 
@@ -222,12 +243,12 @@ Template.ColorPicker.onRendered( () => {
 		var drag = false;
 
 		function DrawPicker (id, strip, label, cl) {
-			colorBlock = document.getElementsByName("color-block")[cl] //document.getElementById(id);
+			colorBlock = document.getElementsByName("color-block")[cl] 
 			ctx1 = colorBlock.getContext('2d');
 			width1 = colorBlock.width;
 			height1 = colorBlock.height;
 
-			colorStrip =  document.getElementsByName("color-strip")[cl] //document.getElementById(strip);
+			colorStrip =  document.getElementsByName("color-strip")[cl] 
 			ctx2 = colorStrip.getContext('2d');
 			width2 = colorStrip.width;
 			height2 = colorStrip.height;
@@ -253,6 +274,102 @@ Template.ColorPicker.onRendered( () => {
 			grd1.addColorStop(1, 'rgba(255, 0, 0, 1)');
 			ctx2.fillStyle = grd1;
 			ctx2.fill();
+
+			function movePickersito(e) {
+		      if (isMoving) {
+		        var x = e.offsetX;
+			  	var y = e.offsetY;
+			  
+			  	Pickersito[cl].style.left = x - 115  + "px";
+			  	Pickersito[cl].style.top = y - 120 + "px";
+
+			  	var imageData = ctx1.getImageData(x, y, 1, 1).data;
+			  	rgbaColor = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',' + '1)';
+
+			  	hex_code = rgb2hex(rgbaColor)
+
+			  	Hex_input[cl].value =  hex_code;
+
+			  	var hsl = rgbToHsl(imageData[0],imageData[1], imageData[2])
+
+			  	R[cl].value = imageData[0]
+			  	G[cl].value = imageData[1]
+			  	B.value = imageData[2]
+
+
+			  	R_slider[cl].value = imageData[0]
+			  	G_slider[cl].value = imageData[1]
+			  	B_slider[cl].value = imageData[2]
+
+			  	H[cl].value = hsl[0]
+			  	S[cl].value = hsl[1]
+			  	L[cl].value = hsl[2]
+
+			  	H_slider[cl].value = hsl[0]
+			  	S_slider[cl].value = hsl[1]
+			  	L_slider[cl].value = hsl[2]
+
+			  	HSLA_MODE[cl].value = hsl[0]
+			  	HSLA_MODE2[cl].value = hsl[1]
+			  	HSLA_MODE3[cl].value = hsl[2]
+
+			  	RGBA_MODE[cl].value = imageData[0];
+			  	RGBA_MODE2[cl].value = imageData[1];
+			 	RGBA_MODE3[cl].value = imageData[2];
+
+			 	document.getElementsByName("color-label")[cl].style.backgroundColor = rgbaColor;
+		      }
+		    }
+
+		    function moveStripsito (e) {
+		    	if (isMovingStrip) {
+		    		x = e.offsetX;
+					y = e.offsetY;
+					var imageData = ctx2.getImageData(x, y, 1, 1).data;
+					rgbaColor = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ', 1)';
+
+					Estripsito[cl].style.top = (y - 130) + "px"
+
+					hex_code = rgb2hex(rgbaColor)
+
+					Hex_input[cl].value =  hex_code;
+
+					var hsl = rgbToHsl(imageData[0],imageData[1], imageData[2])
+
+					R[cl].value = imageData[0]
+					G[cl].value = imageData[1]
+					B[cl].value = imageData[2]
+
+
+					R_slider[cl].value = imageData[0]
+					G_slider[cl].value = imageData[1]
+					B_slider[cl].value = imageData[2]
+
+					H[cl].value = 360 - hsl[0]
+					S[cl].value = hsl[1]
+					L[cl].value = hsl[2]
+
+					H_slider[cl].value = hsl[0]
+					S_slider[cl].value = hsl[1]
+					L_slider[cl].value = hsl[2]
+
+					HA__SLIDER[cl].value = hsl[0] 
+
+					HSLA_MODE[cl].value = hsl[0]
+					HSLA_MODE2[cl].value = hsl[1]
+					HSLA_MODE3[cl].value = hsl[2]
+
+					RGBA_MODE[cl].value = imageData[0];
+					RGBA_MODE2[cl].value = imageData[1];
+					RGBA_MODE3[cl].value = imageData[2];
+
+					changeBackgroundSlidersHSL(hsl[0])
+
+					Hex_input[cl].value =  hex_code;
+
+					fillGradient(cl);
+		    	}	
+		    }
 
 			function click(e) {
 			  x = e.offsetX;
@@ -302,6 +419,26 @@ Template.ColorPicker.onRendered( () => {
 			  fillGradient(cl);
 			}
 
+			colorBlock.addEventListener('mousedown', function(e) {
+		    	isMoving = true;	
+		      	movePickersito(e);
+		    });
+
+		    colorStrip.addEventListener('mousedown', function(e) {
+		    	isMovingStrip = true;
+		    	moveStripsito(e);
+		    });
+
+		    document.addEventListener('mouseup', function(e) {
+		      	isMoving = false;
+		    	isMovingStrip = false;
+		    });
+
+		    document.addEventListener('mousemove', function(e) {
+		    	movePickersito(e);
+		    	moveStripsito(e);
+		    });
+
 			function changeBackgroundSlidersHSL(h) {
 				var backgroundS = "-webkit-linear-gradient(left, hsla("+ h +", 0%, 50%, 0.78),hsla(" + h + ", 20%, 50%, 0.78),hsla(" + h +", 40%, 50%, 0.78),hsla(" + h + ", 60%, 50%, 0.78),hsla(" +  h + ", 80%, 50%, 0.78),hsla(" + h + ", 100%, 50%, 0.78))"
 
@@ -347,7 +484,7 @@ Template.ColorPicker.onRendered( () => {
 			  	var imageData = ctx1.getImageData(x, y, 1, 1).data;
 			  	rgbaColor = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',' + '1)';
 
-			  	Pickersito[cl].style.left = x -115  + "px";
+			  	Pickersito[cl].style.left = x - 115  + "px";
 			  	Pickersito[cl].style.top = y - 120 + "px";
 
 			  	hex_code = rgb2hex(rgbaColor)
@@ -417,6 +554,12 @@ Template.ColorPicker.onRendered( () => {
 
 				    Hex_input[cl].value =  hex_code2;
 					fillGradient(cl);
+		    }
+
+		    function changeHueFromInput (hue, cl) {
+		    		console.log(hue)
+					//Estripsito[cl].style.top = (hue) + "px"
+					//fillGradient(cl);
 		    }
 
 
@@ -564,17 +707,47 @@ Template.ColorPicker.onRendered( () => {
 			    return JSON.stringify(obj) === JSON.stringify({});
 			}
 
+			function LockHarmony (harmony) {
+				var cls = ["cl1", "cl2", "cl3", "cl4", "cl5"]
+
+				cls.forEach( function (key, index) {
+					if ( !isEmpty(colorsObject[ key ]) || !colorsObject[key] === undefined ) {
+						colorsObject[ key ] = {
+							...colorsObject[ key ],
+							"harmony": harmony,
+						}
+					}
+				})
+
+				return colorsObject;
+			}
+
 			function addColorRGBToObject (key, ColorLocked, cl) {
-				valor_r = parseInt(R[cl].value)
-				valor_g = parseInt(G[cl].value)
-				valor_b = parseInt(B[cl].value)
+
+				key = Session.get('color')
+				var cl =  0;
+
+				if (key === "cl1") {
+					cl = 0;
+				} else if (key === "cl2") {
+					cl = 1;
+				} else if (key === "cl3") {
+					cl = 2;
+				} else if  (key ===  "cl4") {
+					cl = 3;
+				} else {
+					cl = 4;
+				}
+
 				valor_a = parseFloat(valor_a)
 
-				var hsl = rgbToHsl(valor_r, valor_g, valor_b)
-
-				varlor_h = hsl[0]
-				valor_s = hsl[1]
-				valor_l = hsl[2]
+				valor_h = parseInt(HSLA_MODE[cl].value)
+				valor_s = parseInt(HSLA_MODE2[cl].value)
+				valor_l = parseInt(HSLA_MODE3[cl].value)
+				
+				valor_r = parseInt(RGBA_MODE[cl].value)
+				valor_g = parseInt(RGBA_MODE2[cl].value)
+				valor_b = parseInt(RGBA_MODE3[cl].value)
 
 				if ( isEmpty(colorsObject[ key ]) || colorsObject[key] === undefined ) {
 
@@ -588,7 +761,7 @@ Template.ColorPicker.onRendered( () => {
 								"red": valor_r,
 								"green": valor_g,
 								"blue": valor_b,
-								"hue": hsl[0],
+								"hue": valor_h,
 								"saturation": valor_s,
 								"lightness": valor_l,
 								"alpha": valor_a
@@ -604,7 +777,7 @@ Template.ColorPicker.onRendered( () => {
 								"red": valor_r,
 								"green": valor_g,
 								"blue": valor_b,
-								"hue": hsl[0],
+								"hue": valor_h,
 								"saturation": valor_s,
 								"lightness": valor_l,
 								"alpha": valor_a
@@ -621,7 +794,7 @@ Template.ColorPicker.onRendered( () => {
 								"red": valor_r,
 								"green": valor_g,
 								"blue": valor_b,
-								"hue": hsl[0],
+								"hue": valor_h,
 								"saturation": valor_s,
 								"lightness": valor_l,
 								"alpha": valor_a
@@ -637,7 +810,7 @@ Template.ColorPicker.onRendered( () => {
 								"red": valor_r,
 								"green": valor_g,
 								"blue": valor_b,
-								"hue": hsl[0],
+								"hue": valor_h,
 								"saturation": valor_s,
 								"lightness": valor_l,
 								"alpha": valor_a
@@ -660,7 +833,7 @@ Template.ColorPicker.onRendered( () => {
 								"red": valor_r,
 								"green": valor_g,
 								"blue": valor_b,
-								"hue": hsl[0],
+								"hue": valor_h,
 								"saturation": valor_s,
 								"lightness": valor_l,
 								"alpha": valor_a
@@ -677,7 +850,7 @@ Template.ColorPicker.onRendered( () => {
 								"red": valor_r,
 								"green": valor_g,
 								"blue": valor_b,
-								"hue": hsl[0],
+								"hue": valor_h,
 								"saturation": valor_s,
 								"lightness": valor_l,
 								"alpha": valor_a
@@ -695,7 +868,7 @@ Template.ColorPicker.onRendered( () => {
 								"red": valor_r,
 								"green": valor_g,
 								"blue": valor_b,
-								"hue": hsl[0],
+								"hue": valor_h,
 								"saturation": valor_s,
 								"lightness": valor_l,
 								"alpha": valor_a
@@ -712,7 +885,7 @@ Template.ColorPicker.onRendered( () => {
 								"red": valor_r,
 								"green": valor_g,
 								"blue": valor_b,
-								"hue": hsl[0],
+								"hue": valor_h,
 								"saturation": valor_s,
 								"lightness": valor_l,
 								"alpha": valor_a
@@ -733,16 +906,31 @@ Template.ColorPicker.onRendered( () => {
 			}
 
 			function addColorHSLToObject (key, ColorLocked, cl) {
-				valor_h = parseInt(H[cl].value)
-				valor_s = parseInt(S[cl].value)
-				valor_l = parseInt(L[cl].value)
+
+				key = Session.get('color')
+				var cl =  0;
+
+				if (key === "cl1") {
+					cl = 0;
+				} else if (key === "cl2") {
+					cl = 1;
+				} else if (key === "cl3") {
+					cl = 2;
+				} else if  (key ===  "cl4") {
+					cl = 3;
+				} else {
+					cl = 4;
+				}
+				
 				valor_a = parseFloat(valor_a)
 
-				var rgb = hslToRgb(valor_h, valor_s, valor_l)
-
-				varlor_r = rgb[0]
-				valor_g = rgb[1]
-				valor_b = rgb[2]
+				valor_h = parseInt(HSLA_MODE[cl].value)
+				valor_s = parseInt(HSLA_MODE2[cl].value)
+				valor_l = parseInt(HSLA_MODE3[cl].value)
+				
+				valor_r = parseInt(RGBA_MODE[cl].value)
+				valor_g = parseInt(RGBA_MODE2[cl].value)
+				valor_b = parseInt(RGBA_MODE3[cl].value)
 
 				if ( isEmpty(colorsObject[ key ]) || colorsObject[key] === undefined ) {
 
@@ -786,7 +974,7 @@ Template.ColorPicker.onRendered( () => {
 									"lightness": valor_l
 								},
 								"harmony": "all",
-								"red": rgb[0],
+								"red": valor_r,
 								"green": valor_g,
 								"blue": valor_b,
 								"hue": valor_h,
@@ -802,7 +990,7 @@ Template.ColorPicker.onRendered( () => {
 									"alpha": valor_a
 								},
 								"harmony": "all",
-								"red": rgb[0],
+								"red": valor_r,
 								"green": valor_g,
 								"blue": valor_b,
 								"hue": valor_h,
@@ -860,7 +1048,7 @@ Template.ColorPicker.onRendered( () => {
 									"lightness": valor_l
 								},
 								"harmony": "all",
-								"red": rgb[0],
+								"red": valor_r,
 								"green": valor_g,
 								"blue": valor_b,
 								"hue": valor_h,
@@ -877,7 +1065,7 @@ Template.ColorPicker.onRendered( () => {
 									"alpha": valor_a
 								},
 								"harmony": "all",
-								"red": rgb[0],
+								"red": valor_r,
 								"green": valor_g,
 								"blue": valor_b,
 								"hue": valor_h,
@@ -901,46 +1089,165 @@ Template.ColorPicker.onRendered( () => {
 
 			}
 
+			let __color = Session.get('color');
+
+			function LockColor () {
+				var key = Session.get('color')
+				var cl =  0;
+
+				if (key === "cl1") {
+					cl = 0;
+				} else if (key === "cl2") {
+					cl = 1;
+				} else if (key === "cl3") {
+					cl = 2;
+				} else if  (key ===  "cl4") {
+					cl = 3;
+				} else {
+					cl = 4;
+				}
+
+				valor_h = parseInt(HSLA_MODE[cl].value)
+				valor_s = parseInt(HSLA_MODE2[cl].value)
+				valor_l = parseInt(HSLA_MODE3[cl].value)
+				
+				valor_r = parseInt(RGBA_MODE[cl].value)
+				valor_g = parseInt(RGBA_MODE2[cl].value)
+				valor_b = parseInt(RGBA_MODE3[cl].value)
+
+				valor_a = parseFloat(valor_a)
+
+				colorsObject[ key ] = {
+								"locks": {
+									"red": valor_r,
+									"green": valor_g,
+									"blue": valor_b,
+									"hue": valor_h,
+									"saturation": valor_s,
+									"lightness": valor_l,
+									"alpha": valor_a
+								},
+								"harmony": "all",
+								"red": valor_r,
+								"green": valor_g,
+								"blue": valor_b,
+								"hue": valor_h,
+								"saturation": valor_s,
+								"lightness": valor_l,
+								"alpha": valor_a
+							}
 
 
+				window.PendingTastes.addToPendingTaste({
+					tasteKey: "Colors",
+					objectToAdd: ColorLocked
+				});
+
+				return colorsObject
+			}
+
+		analogous.addEventListener('click', function (e) {
+			LockHarmony("analogous")
+		})
+
+		triad.addEventListener('click', function (e) {
+			LockHarmony("triad")
+		})
+
+		tetrad.addEventListener('click', function (e) {
+			LockHarmony("tetrad")
+		})
+
+		monochromatic.addEventListener('click', function (e) {
+			LockHarmony("monochromatic")
+		})
+
+		splitcomplement.addEventListener('click', function (e) {
+			LockHarmony("splitcomplement")
+		})
+
+		complement.addEventListener('click', function (e) {
+			LockHarmony("complement")
+		})
+
+
+
+			cl1_lock.addEventListener('click', function (e) {
+					let __result = LockColor()
+				
+				})
+
+				cl2_lock.addEventListener('click', function (e) {
+					let __result = LockColor()
+				
+				})
+
+				cl3_lock.addEventListener('click', function (e) {
+					let __result = LockColor()
+					
+				})
+
+				cl4_lock.addEventListener('click', function (e) {
+					let __result = LockColor()
+					
+				})
+
+				cl5_lock.addEventListener('click', function (e) {
+					let __result = LockColor(__color)
+					
+				})
+
+			
 
 			function EventsToCall(cl) {
 
-				let __color = Session.get('color');
-
 				// Eventos para bloquear colores
 			red_lock[cl].addEventListener('click', function (e) {
-
+				
 				let __result = addColorRGBToObject( __color, "red", cl)
-
+				
 			})
 
 			green_lock[cl].addEventListener('click', function (e) {
-				addColorRGBToObject( __color, "green", cl)
+			
+				let __result = addColorRGBToObject( __color, "green", cl)
+				
 			})
 
 			blue_lock[cl].addEventListener('click', function (e) {
-				addColorRGBToObject( __color, "blue", cl)
+				
+				let __result = addColorRGBToObject( __color, "blue", cl)
+			
 			})
 
 			alpha_lock[cl].addEventListener('click', function (e) {
-				addColorRGBToObject( __color, "alpha",  cl)
+				
+				let __result = addColorRGBToObject( __color, "alpha",  cl)
+			
 			})
 
 			hue_lock[cl].addEventListener('click', function (e) {
-				addColorHSLToObject( __color, "hue", cl)
+				
+				let __result = addColorHSLToObject( __color, "hue", cl)
+			
 			})
 
 			sat_lock[cl].addEventListener('click', function (e) {
-				addColorHSLToObject( __color, "sat", cl)
+			
+				let __result = addColorHSLToObject( __color, "sat", cl)
+				
 			})
 
 			alpha_hsla_lock[cl].addEventListener('click', function (e) {
-				addColorHSLToObject( __color, "alpha_hsla", cl)
+			
+				let __result = addColorHSLToObject( __color, "alpha_hsla", cl)
+				
 			})
 
 			ligth_lock[cl].addEventListener('click', function (e) {
-				addColorHSLToObject( __color, "light", cl)
+				
+				let __result = addColorHSLToObject( __color, "light", cl)
+			
 			})
 
 				// Eventos para cambiar de modo de vista de sliders por medio de los inputs
@@ -1114,9 +1421,10 @@ Template.ColorPicker.onRendered( () => {
 				RGBA_MODE[cl].value = valor_r;
 
 				var hsl = rgbToHsl(valor_r, valor_g, valor_b)
-				HSLA_MODE[cl].value = hsl[0]
+
+				HSLA_MODE[cl].value = HA__SLIDER[cl].value = hsl[0]
 				HSLA_MODE2[cl].value = hsl[1]
-				HSLA_MODE3[cl].value = hsl[2]
+				HSLA_MODE3[cl].value = hsl[2] 
 
 				R_slider[cl].value = valor_r;
 			})
@@ -1146,7 +1454,8 @@ Template.ColorPicker.onRendered( () => {
 				RGBA_MODE2[cl].value = valor_g;
 
 				var hsl = rgbToHsl(valor_r, valor_g, valor_b)
-				HSLA_MODE[cl].value = hsl[0]
+
+				HSLA_MODE[cl].value = HA__SLIDER[cl].value = hsl[0]
 				HSLA_MODE2[cl].value = hsl[1]
 				HSLA_MODE3[cl].value = hsl[2]
 
@@ -1176,7 +1485,7 @@ Template.ColorPicker.onRendered( () => {
 				RGBA_MODE3[cl].value = valor_b;
 
 				var hsl = rgbToHsl(valor_r, valor_g, valor_b)
-				HSLA_MODE[cl].value = hsl[0]
+				HSLA_MODE[cl].value = HA__SLIDER[cl].value = hsl[0]
 				HSLA_MODE2[cl].value = hsl[1]
 				HSLA_MODE3[cl].value = hsl[2]
 				B_slider[cl].value = valor_b;
@@ -1192,6 +1501,11 @@ Template.ColorPicker.onRendered( () => {
 				if (valor_h > 360 ) {
 					return
 				}
+
+				valor_s = HSLA_MODE2[cl].value;
+				valor_l = HSLA_MODE3[cl].value;
+
+				HA__SLIDER[cl].value = valor_h
 
 				hsl_string = "hsl(" + valor_h + ", " + valor_s + "%, " + valor_l +  "%)"
 
@@ -1232,6 +1546,9 @@ Template.ColorPicker.onRendered( () => {
 					return
 				}
 
+				valor_h = HSLA_MODE[cl].value;
+				valor_l = HSLA_MODE3[cl].value;
+
 				hsl_string = "hsl(" + valor_h + ", " + valor_s + "%, " + valor_l +  "%)"
 
 				var rgb = hslToRgb(valor_h, valor_s, valor_l)
@@ -1263,6 +1580,9 @@ Template.ColorPicker.onRendered( () => {
 				if (valor_l > 100 ) {
 					return
 				}
+
+				valor_h = HSLA_MODE[cl].value;
+				valor_l = HSLA_MODE3[cl].value;
 
 				hsl_string = "hsl(" + valor_h + ", " + valor_s + "%, " + valor_l +  "%)";
 
@@ -1618,7 +1938,7 @@ Template.ColorPicker.onRendered( () => {
 
 				// HSLA
 				H_slider[cl].addEventListener("input", function (e){
-					valor_h = e.target.value;
+					valor_h = parseInt(e.target.value);
 
 					HA__SLIDER[cl].value = valor_h
 
@@ -1659,6 +1979,8 @@ Template.ColorPicker.onRendered( () => {
 					L[cl].value = L_slider[cl].value = valor_l
 
 	    			H[cl].value = valor_h;
+
+	    			changeHueFromInput(valor_h, cl)
 
 	    			ConvertHarmonies(hex_code)
 				});
@@ -1729,6 +2051,10 @@ Template.ColorPicker.onRendered( () => {
 					if (valor_a > 1 ) {
 						return
 					}
+
+					valor_r = RGBA_MODE[cl].value;
+					valor_g = RGBA_MODE2[cl].value;
+					valor_b = RGBA_MODE3[cl].value;
 
 					rgba_string = "rgba(" + valor_r + ", " + valor_g + ", " + valor_b + ", " + valor_a + ")";
 
