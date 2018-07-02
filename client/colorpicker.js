@@ -101,12 +101,10 @@ Template.ColorPicker.onRendered( () => {
 			A_RANGE_INPUT_2 = document.getElementsByName("a_range_input_2");
 
 		var cl1_lock = document.getElementsByName('color_1_lock')[0],
-				cl2_lock = document.getElementsByName('color_2_lock')[0],
-				cl3_lock = document.getElementsByName('color_3_lock')[0],
-				cl4_lock = document.getElementsByName('color_4_lock')[0],
-				cl5_lock = document.getElementsByName('color_5_lock')[0];
-
-				console.log(cl2_lock)
+			cl2_lock = document.getElementsByName('color_2_lock')[0],
+			cl3_lock = document.getElementsByName('color_3_lock')[0],
+			cl4_lock = document.getElementsByName('color_4_lock')[0],
+			cl5_lock = document.getElementsByName('color_5_lock')[0];
 
 		var	R_slider = document.getElementsByName("r_input"),
 			G_slider = document.getElementsByName("g_input"),
@@ -2169,11 +2167,29 @@ Template.ColorPicker.onRendered( () => {
 
 				Hex_input[cl].value = hex_code;
 
-				var a = parseFloat(RGBA_MODE4[cl].value)
+				/*var a = parseFloat(RGBA_MODE4[cl].value)
 
 				rgba_string = "rgba(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ", " + a + ")"
 
+				changeColorFromInput(rgba_string, cl)*/
+
+				var a = parseFloat(RGBA_MODE4[cl].value)
+
+				rgba_string = "rgba(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ", " + a + ")";
+
 				changeColorFromInput(rgba_string, cl)
+
+				var backgroundS1 = "-webkit-linear-gradient(left, hsla("+ h +", 0%, 50%, 0.78),hsla(" + h + ", 20%, 50%, 0.78),hsla(" + h +", 40%, 50%, 0.78),hsla(" + h + ", 60%, 50%, 0.78),hsla(" +  h + ", 80%, 50%, 0.78),hsla(" + h + ", 100%, 50%, 0.78))"
+
+				S_RANGE_Slider_1[cl].style.backgroundImage = backgroundS1
+				S_RANGE_Slider_2[cl].style.backgroundImage = backgroundS1
+
+				var backgroundL1 = "-webkit-linear-gradient(left, hsla("+ h +", 45%, 50%, 0),hsla("+ h +", 45%, 50%, 0.2),hsla(" + valor_h + ", 45%, 50%, 0.4),hsla(" + h + ", 45%, 50%, 0.6000000000000001),hsla(" + h + ", 45%, 50%, 0.8),hsla(" + h + ", 45%, 50%, 1))"
+				L_RANGE_Slider_1[cl].style.backgroundImage = backgroundL1;
+				L_RANGE_Slider_2[cl].style.backgroundImage = backgroundL1;
+
+				ConvertHarmonies(hex_code)
+				
 			})
 
 			H_RANGE_INPUT_2[cl].addEventListener('change', function (e) {
@@ -2202,6 +2218,17 @@ Template.ColorPicker.onRendered( () => {
 				rgba_string = "rgba(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ", " + a + ")"
 
 				changeColorFromInput(rgba_string, cl)
+
+				var backgroundS1 = "-webkit-linear-gradient(left, hsla("+ h +", 0%, 50%, 0.78),hsla(" + h + ", 20%, 50%, 0.78),hsla(" + h +", 40%, 50%, 0.78),hsla(" + h + ", 60%, 50%, 0.78),hsla(" +  h + ", 80%, 50%, 0.78),hsla(" + h + ", 100%, 50%, 0.78))"
+
+				S_RANGE_Slider_1[cl].style.backgroundImage = backgroundS1
+				S_RANGE_Slider_2[cl].style.backgroundImage = backgroundS1
+
+				var backgroundL1 = "-webkit-linear-gradient(left, hsla("+ h +", 45%, 50%, 0),hsla("+ h +", 45%, 50%, 0.2),hsla(" + valor_h + ", 45%, 50%, 0.4),hsla(" + h + ", 45%, 50%, 0.6000000000000001),hsla(" + h + ", 45%, 50%, 0.8),hsla(" + h + ", 45%, 50%, 1))"
+				L_RANGE_Slider_1[cl].style.backgroundImage = backgroundL1;
+				L_RANGE_Slider_2[cl].style.backgroundImage = backgroundL1;
+
+				ConvertHarmonies(hex_code)
 			})
 
 			S_RANGE_Slider_1[cl].addEventListener('input', function (e) {
@@ -2434,7 +2461,7 @@ Template.ColorPicker.onRendered( () => {
 				var a = parseFloat( A_RANGE_INPUT_1[cl].value )
 				var rgb = hslToRgb(h, s, l)
 
-				rgba_string = "rgba(" + h + ", " + s + ", " + l + ", " + a + ")";
+				rgba_string = "rgba(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ", " + a + ")";
 
 				changeColorFromInput(rgba_string, cl)
 			})
@@ -2451,7 +2478,7 @@ Template.ColorPicker.onRendered( () => {
 				var a = parseFloat(A_RANGE_INPUT_1[cl].value)
 				var rgb = hslToRgb(h, s, l)
 
-				rgba_string = "rgba(" + h + ", " + s + ", " + l + ", " + a + ")";
+				rgba_string = "rgba(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ", " + a + ")";
 
 				changeColorFromInput(rgba_string, cl)
 			})
@@ -2467,7 +2494,7 @@ Template.ColorPicker.onRendered( () => {
 				var a = parseFloat(A_RANGE_INPUT_2[cl].value)
 				var rgb = hslToRgb(h, s, l)
 
-				rgba_string = "rgba(" + h + ", " + s + ", " + l + ", " + a + ")";
+				rgba_string = "rgba(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ", " + a + ")";
 
 				changeColorFromInput(rgba_string, cl)
 			})
@@ -2483,7 +2510,7 @@ Template.ColorPicker.onRendered( () => {
 				var a = parseFloat(A_RANGE_INPUT_2[cl].value)
 				var rgb = hslToRgb(h, s, l)
 
-				rgba_string = "rgba(" + h + ", " + s + ", " + l + ", " + a + ")";
+				rgba_string = "rgba(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ", " + a + ")";
 
 				changeColorFromInput(rgba_string, cl)
 			})
