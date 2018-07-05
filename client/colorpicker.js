@@ -1032,6 +1032,23 @@ Template.ColorPicker.onRendered( () => {
 				return colorsObject;
 			}
 
+			function unlock(item) {
+				
+				key = Session.get('color')
+
+				delete colorsObject[ key ]["locks"][item];
+				
+				window.PendingTastes.addToPendingTaste({
+					tasteKey: "Colors",
+					objectToAdd: colorsObject
+				});
+
+				//console.log(colorsObject)
+
+				return colorsObject
+
+			}
+
 			function addColorRGBToObject (key, ColorLocked, cl) {
 
 				key = Session.get('color')
@@ -1235,6 +1252,8 @@ Template.ColorPicker.onRendered( () => {
 					tasteKey: "Colors",
 					objectToAdd: colorsObject
 				});
+
+
 
 				return colorsObject
 
@@ -1447,12 +1466,14 @@ Template.ColorPicker.onRendered( () => {
 
 				}
 
-				console.log(colorsObject)
+				
 
 				window.PendingTastes.addToPendingTaste({
 					tasteKey: "Colors",
 					objectToAdd: colorsObject
 				});
+
+				//console.log("COLOR: ", colorsObject)
 
 				return colorsObject
 
@@ -1512,6 +1533,8 @@ Template.ColorPicker.onRendered( () => {
 					tasteKey: "Colors",
 					objectToAdd: colorsObject
 				});
+
+				//console.log("DESBLOQUEADO: ", colorsObject)
 
 				return colorsObject
 			}
@@ -1627,29 +1650,24 @@ Template.ColorPicker.onRendered( () => {
 
 
 
-			cl1_lock.addEventListener('click', function (e) {
+				cl1_lock.addEventListener('click', function (e) {
 					let __result = LockColor()
-				
 				})
 
 				cl2_lock.addEventListener('click', function (e) {
 					let __result = LockColor()
-				
 				})
 
 				cl3_lock.addEventListener('click', function (e) {
 					let __result = LockColor()
-					
 				})
 
 				cl4_lock.addEventListener('click', function (e) {
 					let __result = LockColor()
-					
 				})
 
 				cl5_lock.addEventListener('click', function (e) {
 					let __result = LockColor(__color)
-					
 				})
 
 			
@@ -1658,50 +1676,137 @@ Template.ColorPicker.onRendered( () => {
 
 				// Eventos para bloquear colores
 			red_lock[cl].addEventListener('click', function (e) {
+				let __result;
 				
-				let __result = addColorRGBToObject( __color, "red", cl)
+				if ( red_lock[cl].classList.contains('__locked') ) {
+					red_lock[cl].classList.remove('__locked')
+					red_lock[cl].innerHTML = "L";
+					__result = unlock("red")
+					
+				} else {
+					__result = addColorRGBToObject( __color, "red", cl)
+					red_lock[cl].classList.add('__locked')
+					red_lock[cl].innerHTML = "D";
+				}
 				
 			})
 
 			green_lock[cl].addEventListener('click', function (e) {
-			
-				let __result = addColorRGBToObject( __color, "green", cl)
+
+				let __result;
 				
+				if ( green_lock[cl].classList.contains('__locked') ) {
+					green_lock[cl].classList.remove('__locked')
+					green_lock[cl].innerHTML = "L";
+					__result = unlock("green")
+					
+				} else {
+					__result = addColorRGBToObject( __color, "green", cl)
+					green_lock[cl].classList.add('__locked')
+					green_lock[cl].innerHTML = "D";
+				}
+			
 			})
 
 			blue_lock[cl].addEventListener('click', function (e) {
-				
-				let __result = addColorRGBToObject( __color, "blue", cl)
+
+				let __result;
+
+				if ( blue_lock[cl].classList.contains('__locked') ) {
+					blue_lock[cl].classList.remove('__locked')
+					blue_lock[cl].innerHTML = "L";
+					__result = unlock("blue")
+					
+				} else {
+					__result = addColorRGBToObject( __color, "blue", cl)
+					blue_lock[cl].classList.add('__locked')
+					blue_lock[cl].innerHTML = "D";
+				}
 			
 			})
 
 			alpha_lock[cl].addEventListener('click', function (e) {
-				
-				let __result = addColorRGBToObject( __color, "alpha",  cl)
+
+				let __result;
+
+				if ( alpha_lock[cl].classList.contains('__locked') ) {
+					alpha_lock[cl].classList.remove('__locked')
+					alpha_lock[cl].innerHTML = "L";
+					__result = unlock("alpha")
+					
+				} else {
+					__result = addColorRGBToObject( __color, "alpha",  cl)
+					alpha_lock[cl].classList.add('__locked')
+					alpha_lock[cl].innerHTML = "D";
+				}
 			
 			})
 
 			hue_lock[cl].addEventListener('click', function (e) {
-				
-				let __result = addColorHSLToObject( __color, "hue", cl)
+
+				let __result;
+
+				if ( hue_lock[cl].classList.contains('__locked') ) {
+					hue_lock[cl].classList.remove('__locked')
+					hue_lock[cl].innerHTML = "L";
+					__result = unlock("hue")
+					
+				} else {
+					__result = addColorHSLToObject( __color, "hue", cl)
+					hue_lock[cl].classList.add('__locked')
+					hue_lock[cl].innerHTML = "D";
+				}
 			
 			})
 
 			sat_lock[cl].addEventListener('click', function (e) {
-			
-				let __result = addColorHSLToObject( __color, "sat", cl)
+
+				let __result;
+
+				if ( sat_lock[cl].classList.contains('__locked') ) {
+					sat_lock[cl].classList.remove('__locked')
+					sat_lock[cl].innerHTML = "L";
+					__result = unlock("saturation")
+					
+				} else {
+					__result = addColorHSLToObject( __color, "sat", cl)
+					sat_lock[cl].classList.add('__locked')
+					sat_lock[cl].innerHTML = "D";
+				}
 				
 			})
 
 			alpha_hsla_lock[cl].addEventListener('click', function (e) {
-			
-				let __result = addColorHSLToObject( __color, "alpha_hsla", cl)
+
+				let __result;
+
+				if ( alpha_hsla_lock[cl].classList.contains('__locked') ) {
+					alpha_hsla_lock[cl].classList.remove('__locked')
+					alpha_hsla_lock[cl].innerHTML = "L";
+					__result = unlock("alpha")
+					
+				} else {
+					__result = addColorHSLToObject( __color, "alpha_hsla", cl)
+					alpha_hsla_lock[cl].classList.add('__locked')
+					alpha_hsla_lock[cl].innerHTML = "D";
+				}
 				
 			})
 
 			ligth_lock[cl].addEventListener('click', function (e) {
-				
-				let __result = addColorHSLToObject( __color, "light", cl)
+
+				let __result;
+
+				if ( ligth_lock[cl].classList.contains('__locked') ) {
+					ligth_lock[cl].classList.remove('__locked')
+					ligth_lock[cl].innerHTML = "L";
+					__result = unlock("lightness")
+					
+				} else {
+					__result = addColorHSLToObject( __color, "light", cl)
+					ligth_lock[cl].classList.add('__locked')
+					ligth_lock[cl].innerHTML = "D";
+				}
 			
 			})
 
